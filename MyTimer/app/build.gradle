@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.lyq.mytimer"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -25,4 +25,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation 'com.github.DingMouRen:LayoutManagerGroup:1e6f4f96eb'
+
+    //https://github.com/luckybilly/SmartSwipe
+    implementation 'com.billy.android:smart-swipe:1.0.6'
+    //compat for android support library
+    implementation 'com.billy.android:smart-swipe-support:1.0.0'
 }
