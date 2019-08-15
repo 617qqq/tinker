@@ -16,7 +16,7 @@ public class MyApplication extends Application {
 	}
 
 	private void initDelay() {
-		SmartSwipeBack.activityBezierBack(this, new SmartSwipeBack.ActivitySwipeBackFilter() {
+		SmartSwipeBack.activitySlidingBack(this, new SmartSwipeBack.ActivitySwipeBackFilter() {
 			@Override
 			public boolean onFilter(Activity activity) {
 				return !(activity instanceof MainActivity);

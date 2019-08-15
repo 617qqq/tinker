@@ -17,7 +17,7 @@ public class MainActivity extends BaseActivity {
 		view.setOnKeyConfirm(new MyTimeView.OnKeyConfirm() {
 			@Override
 			public void on(boolean isConfirm) {
-				if (isConfirm) {
+				if (isConfirm){
 					MyResumeActivity.startAction(MainActivity.this);
 				}
 			}

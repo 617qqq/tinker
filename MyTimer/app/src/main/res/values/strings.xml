@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">MyTimer</string>
+    <string name="app_name">时间罗盘</string>
+    
+    <string name="str_evaluate">
+        请给我一分钟组织语言\n
+        沟通请用软件\n
+        少说话，多做事\n
+    </string>
 </resources>

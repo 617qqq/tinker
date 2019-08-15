@@ -289,11 +289,13 @@ public class MyTimeView extends View {
 			case MotionEvent.ACTION_UP:
 				isHandle = true;
 				if (onKeyConfirm != null) {
-					if (targetDegreesMin - targetDegreesOffset < degreesMin
-							&& degreesMin < targetDegreesMin + targetDegreesOffset
-							&& targetDegreesSecond - targetDegreesOffset < degreesSecond
-							&& degreesSecond < targetDegreesSecond + targetDegreesOffset
-					) {
+					float _min = convert(degreesMin);
+					float _second = convert(degreesSecond);
+					boolean isMinFit = (targetDegreesMin - targetDegreesOffset < _min
+							&& _min < targetDegreesMin + targetDegreesOffset);
+					boolean isSecondFit = (targetDegreesSecond - targetDegreesOffset < _second
+							&& _second < targetDegreesSecond + targetDegreesOffset);
+					if (isMinFit && isSecondFit) {
 						onKeyConfirm.on(true);
 					} else {
 						onKeyConfirm.on(false);
@@ -304,6 +306,13 @@ public class MyTimeView extends View {
 		mLastX = x;
 		mLastY = y;
 		return isHandle;
+	}
+
+	private float convert(float degrees) {
+		while (degrees < 0){
+			degrees += 360;
+		}
+		return degrees % 360;
 	}
 
 	private boolean isLeftRadius(int x) {
@@ -332,7 +341,9 @@ public class MyTimeView extends View {
 		int targetMin = 6, targetSecond = 17;
 		downCalendar.setTimeInMillis(mDownTime);
 		targetDegreesMin = -6 * (targetMin - downCalendar.get(Calendar.MINUTE));
+		targetDegreesMin = targetDegreesMin < 0 ? targetDegreesMin + 360 : targetDegreesMin;
 		targetDegreesSecond = -6 * (targetSecond - downCalendar.get(Calendar.SECOND));
+		targetDegreesSecond = targetDegreesSecond < 0 ? targetDegreesSecond + 360 : targetDegreesSecond;
 	}
 
 	public interface OnKeyConfirm {
