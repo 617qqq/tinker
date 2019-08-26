@@ -19,7 +19,13 @@
             android:theme="@style/AppSplash"></activity>
         <activity android:name=".resume.MyResumeActivity" />
 
-        <activity android:name=".ipc.FileShareActivityMain">
+        <activity android:name=".ipc.file_share.FileShareActivityMain"></activity>
+
+        <activity
+            android:name=".ipc.file_share.FileShareActivityClient"
+            android:process=":file_share" />
+
+        <activity android:name=".ipc.bundle.BundleActivityMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,8 +34,8 @@
         </activity>
 
         <activity
-            android:name=".ipc.FileShareActivityClient"
-            android:process=":file_share" />
+            android:name=".ipc.bundle.BundleActivityClient"
+            android:process=":bundle" />
     </application>
 
 </manifest>

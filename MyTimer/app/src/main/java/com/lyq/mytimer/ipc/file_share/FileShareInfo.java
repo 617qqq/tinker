@@ -1,12 +1,12 @@
-package com.lyq.mytimer.ipc;
+package com.lyq.mytimer.ipc.file_share;
 
 import java.io.Serializable;
 
-public class IPCTestInfo implements Serializable {
+public class FileShareInfo implements Serializable {
 
 	private String name;
 
-	public IPCTestInfo(String name) {
+	public FileShareInfo(String name) {
 		this.name = name;
 	}
 

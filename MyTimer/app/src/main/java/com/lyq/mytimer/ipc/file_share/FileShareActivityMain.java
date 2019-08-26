@@ -1,4 +1,4 @@
-package com.lyq.mytimer.ipc;
+package com.lyq.mytimer.ipc.file_share;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.lyq.mytimer.R;
 import com.lyq.mytimer.base.BaseActivity;
+import com.lyq.mytimer.ipc.IPCConstants;
+import com.lyq.mytimer.ipc.MyUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,7 +18,7 @@ import java.io.ObjectOutputStream;
 public class FileShareActivityMain extends BaseActivity {
 
 	private TextView tvName;
-	private IPCTestInfo mInfo = new IPCTestInfo("Android");
+	private FileShareInfo mInfo = new FileShareInfo("Android");
 	private int tag;
 
 	@Override
