@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-public class BoolManagerImpl extends Binder implements IBookManager {
+public abstract class BoolManagerImpl extends Binder implements IBookManager {
 
 	/**
 	 * Construct the stub at attach it to the interface.
@@ -66,42 +66,6 @@ public class BoolManagerImpl extends Binder implements IBookManager {
 				return true;
 		}
 		return super.onTransact(code, data, reply, flags);
-	}
-
-	@Override
-	public List<BookInfo> getBookList() throws RemoteException {
-		Parcel data = Parcel.obtain();
-		Parcel reply = Parcel.obtain();
-		List<BookInfo> result;
-		try {
-			data.writeInterfaceToken(DESCRITOR);
-			this.transact(TRANSCATION_getBookList, data, reply, 0);
-			reply.readException();
-			result = reply.createTypedArrayList(BookInfo.CREATOR);
-		} finally {
-			reply.recycle();
-			data.recycle();
-		}
-		return result;
-	}
-
-	@Override
-	public void addBook(BookInfo info) throws RemoteException {
-		Parcel data = Parcel.obtain();
-		Parcel reply = Parcel.obtain();
-		try {
-			data.writeInterfaceToken(DESCRITOR);
-			if (info != null) {
-				data.writeInt(1);
-				info.writeToParcel(data, 0);
-			} else {
-				data.writeInt(0);
-			}
-			this.transact(TRANSCATION_addBook, data, reply, 0);
-		} finally {
-			reply.recycle();
-			data.recycle();
-		}
 	}
 
 	private static class Proxy implements IBookManager {

@@ -7,6 +7,9 @@ public class BookInfo implements Parcelable {
 
 	private String name;
 
+	public BookInfo(String name) {
+		this.name = name;
+	}
 
 	public String getName() {
 		return name;

@@ -10,7 +10,7 @@ public interface IBookManager extends IInterface {
 
 	String DESCRITOR = "com.lyq.mytimer.ipc.aidl.IBookManager";
 
-	int TRANSCATION_getBookList = IBinder.FIRST_CALL_TRANSACTION + 0;
+	int TRANSCATION_getBookList = IBinder.FIRST_CALL_TRANSACTION;
 	int TRANSCATION_addBook = IBinder.FIRST_CALL_TRANSACTION + 1;
 
 	List<BookInfo> getBookList() throws RemoteException;
