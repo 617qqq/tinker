@@ -32,20 +32,18 @@
             android:process=":bundle" />
 
         <activity android:name=".ipc.aidl.AIDLActivityMain">
-
-        </activity>
-
-        <service
-            android:name=".ipc.aidl.BookManagerService"
-            android:process=":aidl" />
-
-        <activity android:name=".ipc.aidl_demo.BookManagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".ipc.aidl.BookManagerService"
+            android:process=":aidl" />
+
+        <activity android:name=".ipc.aidl_demo.BookManagerActivity"></activity>
 
         <service
             android:name=".ipc.aidl_demo.BookManagerService"

@@ -70,23 +70,13 @@ public abstract class BoolManagerImpl extends Binder implements IBookManager {
 				return true;
 			case TRANSCATION_registerNewBookArrivedListener:
 				data.enforceInterface(DESCRIPTOR);
-				IOnNewBookArrivedListener registerNewBookListener;
-				if (0 != data.readInt()) {
-					registerNewBookListener = (IOnNewBookArrivedListener) data.readStrongBinder();
-				} else {
-					registerNewBookListener = null;
-				}
+				IOnNewBookArrivedListener registerNewBookListener = OnNewBookArrivedListener.asInterface(data.readStrongBinder());
 				this.registerNewBookArrivedListener(registerNewBookListener);
 				reply.writeNoException();
 				return true;
 			case TRANSCATION_unregisterNewBookArrivedListener:
 				data.enforceInterface(DESCRIPTOR);
-				IOnNewBookArrivedListener unregisterNewBookListener;
-				if (0 != data.readInt()) {
-					unregisterNewBookListener = (IOnNewBookArrivedListener) data.readStrongBinder();
-				} else {
-					unregisterNewBookListener = null;
-				}
+				IOnNewBookArrivedListener unregisterNewBookListener = OnNewBookArrivedListener.asInterface(data.readStrongBinder());
 				this.unregisterNewBookArrivedListener(unregisterNewBookListener);
 				reply.writeNoException();
 				return true;
@@ -146,12 +136,11 @@ public abstract class BoolManagerImpl extends Binder implements IBookManager {
 			try {
 				data.writeInterfaceToken(DESCRIPTOR);
 				if (listener != null) {
-					data.writeInt(1);
 					data.writeStrongBinder(listener.asBinder());
 				} else {
 					data.writeInt(0);
 				}
-				mRemote.transact(TRANSCATION_addBook, data, reply, 0);
+				mRemote.transact(TRANSCATION_registerNewBookArrivedListener, data, reply, 0);
 			} finally {
 				reply.recycle();
 				data.recycle();
@@ -165,12 +154,11 @@ public abstract class BoolManagerImpl extends Binder implements IBookManager {
 			try {
 				data.writeInterfaceToken(DESCRIPTOR);
 				if (listener != null) {
-					data.writeInt(1);
 					data.writeStrongBinder(listener.asBinder());
 				} else {
 					data.writeInt(0);
 				}
-				mRemote.transact(TRANSCATION_addBook, data, reply, 0);
+				mRemote.transact(TRANSCATION_unregisterNewBookArrivedListener, data, reply, 0);
 			} finally {
 				reply.recycle();
 				data.recycle();

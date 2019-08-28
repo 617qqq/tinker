@@ -1,11 +1,14 @@
 package com.lyq.mytimer.ipc.aidl;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -23,6 +26,7 @@ public class AIDLActivityMain extends BaseActivity {
 
 	private final String TAG = "AIDLActivityClient";
 	private static final String KEY_INFO = "INFO";
+	private static final int MESSAGE_NEW_BOOK = 1;
 
 	private TextView tvName;
 	private BundleInfo mInfo;
@@ -37,6 +41,25 @@ public class AIDLActivityMain extends BaseActivity {
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
 
+		}
+	};
+
+	private OnNewBookArrivedListener listener = new OnNewBookArrivedListener() {
+		@Override
+		public void newBookArrived(BookInfo book) throws RemoteException {
+			mHandler.obtainMessage(MESSAGE_NEW_BOOK, book.getName()).sendToTarget();
+		}
+	};
+
+	@SuppressLint("HandlerLeak")
+	private Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+				case MESSAGE_NEW_BOOK:
+					Toast.makeText(AIDLActivityMain.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
+					break;
+			}
 		}
 	};
 
@@ -61,10 +84,7 @@ public class AIDLActivityMain extends BaseActivity {
 	}
 
 	public void getList(View view) {
-		if (bookManager == null) {
-			Toast.makeText(this, "bookManager == null", Toast.LENGTH_SHORT).show();
-			return;
-		}
+		if (checkBookManager()) return;
 		try {
 			List<BookInfo> list = bookManager.getBookList();
 			Log.i(TAG, "onServiceConnected: list type:" + list.getClass().getCanonicalName());
@@ -83,10 +103,29 @@ public class AIDLActivityMain extends BaseActivity {
 		}
 	}
 
-	public void register(View view) {
+	private boolean checkBookManager() {
+		if (bookManager == null) {
+			Toast.makeText(this, "bookManager == null", Toast.LENGTH_SHORT).show();
+			return true;
+		}
+		return false;
+	}
 
+	public void register(View view) {
+		if (checkBookManager()) return;
+		try {
+			bookManager.registerNewBookArrivedListener(listener);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void unregister(View view) {
+		if (checkBookManager()) return;
+		try {
+			bookManager.unregisterNewBookArrivedListener(listener);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 }

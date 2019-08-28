@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -16,7 +17,7 @@ public class BookManagerService extends Service {
 
 	private CopyOnWriteArrayList<BookInfo> mBookList = new CopyOnWriteArrayList<BookInfo>();
 
-	private CopyOnWriteArrayList<IOnNewBookArrivedListener> listeners = new CopyOnWriteArrayList<>();
+	private RemoteCallbackList<IOnNewBookArrivedListener> listeners = new RemoteCallbackList<>();
 
 	private Binder mBinder = new BoolManagerImpl() {
 		@Override
@@ -32,14 +33,12 @@ public class BookManagerService extends Service {
 
 		@Override
 		public void registerNewBookArrivedListener(IOnNewBookArrivedListener listener) throws RemoteException {
-			if (listeners.contains(listener)) {
-
-			}
+			listeners.register(listener);
 		}
 
 		@Override
 		public void unregisterNewBookArrivedListener(IOnNewBookArrivedListener listener) throws RemoteException {
-
+			listeners.unregister(listener);
 		}
 	};
 
@@ -48,10 +47,44 @@ public class BookManagerService extends Service {
 		super.onCreate();
 		mBookList.add(new BookInfo("Android"));
 		mBookList.add(new BookInfo("IOS"));
+		new Thread(new ServiceWorker()).start();
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return mBinder;
+	}
+
+	private class ServiceWorker implements Runnable {
+
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				int bookId = mBookList.size() + 1;
+				BookInfo info = new BookInfo("new book#" + bookId);
+				try {
+					onNewBookArrived(info);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void onNewBookArrived(BookInfo info) throws RemoteException {
+		mBookList.add(info);
+		int listenersSize = listeners.beginBroadcast();
+		for (int i = 0; i < listenersSize; i++) {
+			IOnNewBookArrivedListener listener = listeners.getBroadcastItem(i);
+			if (listener != null) {
+				listener.newBookArrived(info);
+			}
+		}
+		listeners.finishBroadcast();
 	}
 }
