@@ -16,25 +16,30 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppSplash">
-        </activity>
+            android:theme="@style/AppSplash"></activity>
         <activity android:name=".resume.MyResumeActivity" />
 
-        <activity android:name=".ipc.file_share.FileShareActivityMain">
-        </activity>
+        <activity android:name=".ipc.file_share.FileShareActivityMain"></activity>
 
         <activity
             android:name=".ipc.file_share.FileShareActivityClient"
             android:process=":file_share" />
 
-        <activity android:name=".ipc.bundle.BundleActivityMain">
-        </activity>
+        <activity android:name=".ipc.bundle.BundleActivityMain"></activity>
 
         <activity
             android:name=".ipc.bundle.BundleActivityClient"
             android:process=":bundle" />
 
         <activity android:name=".ipc.aidl.AIDLActivityMain">
+
+        </activity>
+
+        <service
+            android:name=".ipc.aidl.BookManagerService"
+            android:process=":aidl" />
+
+        <activity android:name=".ipc.aidl_demo.BookManagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,8 +48,8 @@
         </activity>
 
         <service
-            android:name=".ipc.aidl.BookManagerService"
-            android:process=":aidl" />
+            android:name=".ipc.aidl_demo.BookManagerService"
+            android:process=":aidl_demo" />
     </application>
 
 </manifest>

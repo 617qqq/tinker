@@ -147,7 +147,7 @@ public abstract class BoolManagerImpl extends Binder implements IBookManager {
 				data.writeInterfaceToken(DESCRIPTOR);
 				if (listener != null) {
 					data.writeInt(1);
-					data.writeStrongBinder(listener);
+					data.writeStrongBinder(listener.asBinder());
 				} else {
 					data.writeInt(0);
 				}
@@ -166,7 +166,7 @@ public abstract class BoolManagerImpl extends Binder implements IBookManager {
 				data.writeInterfaceToken(DESCRIPTOR);
 				if (listener != null) {
 					data.writeInt(1);
-					data.writeStrongBinder(listener);
+					data.writeStrongBinder(listener.asBinder());
 				} else {
 					data.writeInt(0);
 				}

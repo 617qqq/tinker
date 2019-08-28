@@ -1,8 +1,8 @@
 package com.lyq.mytimer.ipc.aidl;
 
-import android.os.IBinder;
+import android.os.IInterface;
 
-public interface IoNewBookArrivedListener extends IBinder {
+public interface IoNewBookArrivedListener extends IInterface {
 
 	void newBookArrived(BookInfo book);
 }
