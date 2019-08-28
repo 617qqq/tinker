@@ -19,7 +19,7 @@ public interface IBookManager extends IInterface {
 
 	void addBook(BookInfo info) throws RemoteException;
 
-	void registerNewBookArrivedListener(IoNewBookArrivedListener listener) throws RemoteException;
+	void registerNewBookArrivedListener(IOnNewBookArrivedListener listener) throws RemoteException;
 
-	void unregisterNewBookArrivedListener(IoNewBookArrivedListener listener) throws RemoteException;
+	void unregisterNewBookArrivedListener(IOnNewBookArrivedListener listener) throws RemoteException;
 }

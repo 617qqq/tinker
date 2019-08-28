@@ -16,7 +16,7 @@ public class BookManagerService extends Service {
 
 	private CopyOnWriteArrayList<BookInfo> mBookList = new CopyOnWriteArrayList<BookInfo>();
 
-	private CopyOnWriteArrayList<IoNewBookArrivedListener> listeners = new CopyOnWriteArrayList<>();
+	private CopyOnWriteArrayList<IOnNewBookArrivedListener> listeners = new CopyOnWriteArrayList<>();
 
 	private Binder mBinder = new BoolManagerImpl() {
 		@Override
@@ -31,14 +31,14 @@ public class BookManagerService extends Service {
 		}
 
 		@Override
-		public void registerNewBookArrivedListener(IoNewBookArrivedListener listener) throws RemoteException {
+		public void registerNewBookArrivedListener(IOnNewBookArrivedListener listener) throws RemoteException {
 			if (listeners.contains(listener)) {
 
 			}
 		}
 
 		@Override
-		public void unregisterNewBookArrivedListener(IoNewBookArrivedListener listener) throws RemoteException {
+		public void unregisterNewBookArrivedListener(IOnNewBookArrivedListener listener) throws RemoteException {
 
 		}
 	};

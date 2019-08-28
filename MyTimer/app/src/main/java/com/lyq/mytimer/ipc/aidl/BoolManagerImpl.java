@@ -70,9 +70,9 @@ public abstract class BoolManagerImpl extends Binder implements IBookManager {
 				return true;
 			case TRANSCATION_registerNewBookArrivedListener:
 				data.enforceInterface(DESCRIPTOR);
-				IoNewBookArrivedListener registerNewBookListener;
+				IOnNewBookArrivedListener registerNewBookListener;
 				if (0 != data.readInt()) {
-					registerNewBookListener = (IoNewBookArrivedListener) data.readStrongBinder();
+					registerNewBookListener = (IOnNewBookArrivedListener) data.readStrongBinder();
 				} else {
 					registerNewBookListener = null;
 				}
@@ -81,9 +81,9 @@ public abstract class BoolManagerImpl extends Binder implements IBookManager {
 				return true;
 			case TRANSCATION_unregisterNewBookArrivedListener:
 				data.enforceInterface(DESCRIPTOR);
-				IoNewBookArrivedListener unregisterNewBookListener;
+				IOnNewBookArrivedListener unregisterNewBookListener;
 				if (0 != data.readInt()) {
-					unregisterNewBookListener = (IoNewBookArrivedListener) data.readStrongBinder();
+					unregisterNewBookListener = (IOnNewBookArrivedListener) data.readStrongBinder();
 				} else {
 					unregisterNewBookListener = null;
 				}
@@ -140,7 +140,7 @@ public abstract class BoolManagerImpl extends Binder implements IBookManager {
 		}
 
 		@Override
-		public void registerNewBookArrivedListener(IoNewBookArrivedListener listener) throws RemoteException {
+		public void registerNewBookArrivedListener(IOnNewBookArrivedListener listener) throws RemoteException {
 			Parcel data = Parcel.obtain();
 			Parcel reply = Parcel.obtain();
 			try {
@@ -159,7 +159,7 @@ public abstract class BoolManagerImpl extends Binder implements IBookManager {
 		}
 
 		@Override
-		public void unregisterNewBookArrivedListener(IoNewBookArrivedListener listener) throws RemoteException {
+		public void unregisterNewBookArrivedListener(IOnNewBookArrivedListener listener) throws RemoteException {
 			Parcel data = Parcel.obtain();
 			Parcel reply = Parcel.obtain();
 			try {
