@@ -31,13 +31,19 @@
             android:name=".ipc.bundle.BundleActivityClient"
             android:process=":bundle" />
 
-        <activity android:name=".ipc.aidl.AIDLActivityMain">
+        <activity android:name=".ipc.messenger.MessengerActivityMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".ipc.messenger.MessengerService"
+            android:process=":messenger" />
+
+        <activity android:name=".ipc.aidl.AIDLActivityMain"></activity>
 
         <service
             android:name=".ipc.aidl.BookManagerService"
