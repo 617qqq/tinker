@@ -22,6 +22,13 @@ import com.lyq.mytimer.ipc.IPCConstants;
 
 import java.util.ArrayList;
 
+/**
+ * 客户端和服务端 拿到对方的Messenger来发送 Message 。只不过客户端
+ * 通过 bindService，而服务端通过 message.replyTo 来获得对方的Messenger。
+ * <p>
+ * Messenger中有一个 Hanlder 以串行的方式处理队列中的消息。不存在并发执行，因此
+ * 我们不用考虑线程同步的问题。
+ */
 public class MessengerActivityMain extends BaseActivity {
 
 	private final String TAG = "AIDLActivityClient";
@@ -32,6 +39,10 @@ public class MessengerActivityMain extends BaseActivity {
 
 	private int size;
 
+	/**
+	 * 绑定服务端的Sevice，利用服务端返回的IBinder对象来创建一个Messenger，
+	 * 通过这个Messenger就可以向服务端发送消息了，消息类型是 Message 。
+	 */
 	private ServiceConnection mConnection = new ServiceConnection() {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
@@ -44,11 +55,17 @@ public class MessengerActivityMain extends BaseActivity {
 		}
 	};
 
+	/**
+	 * 如果需要服务端响应，则需要创建一个Handler并通过它来创建一个Messenger（和服务端一样），
+	 * 并通过 Message 的 replyTo 参数传递给服务端。服务端通过Message的 replyTo 参数就可
+	 * IPC机制以回应客户端了。
+	 */
 	@SuppressLint("HandlerLeak")
 	private Messenger mGetReplyMessenger = new Messenger(new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			Bundle bundle = msg.getData();
+			//android.os.BadParcelableException: ClassNotFoundException when unmarshalling
 			bundle.setClassLoader(BookInfo.class.getClassLoader());
 			switch (msg.what) {
 				case IPCConstants.MESSAGE_GET_LIST:

@@ -39,6 +39,7 @@ public class MessengerService extends Service {
 				case IPCConstants.MESSAGE_ADD:
 					Message replyAddMessage = Message.obtain(null, IPCConstants.MESSAGE_ADD);
 					Bundle getBundle = msg.getData();
+					//android.os.BadParcelableException: ClassNotFoundException when unmarshalling
 					getBundle.setClassLoader(BookInfo.class.getClassLoader());
 					BookInfo info = getBundle.getParcelable("book");
 					Bundle replyData = new Bundle();
@@ -61,6 +62,10 @@ public class MessengerService extends Service {
 		}
 	}
 
+	/**
+	 * 创建一个Service来处理客户端请求，同时创建一个Handler并通过它来创建一个
+	 * Messenger，然后再Service的onBind中返回Messenger对象底层的Binder即可。
+	 */
 	private final Messenger mMessenger = new Messenger(new MessengerHandler());
 
 	@Override
