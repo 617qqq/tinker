@@ -1,13 +1,17 @@
 package com.lyq.mytimer.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.RadialGradient;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -27,12 +31,18 @@ public class AttrTableView extends View {
 	private Paint mPaintValue = new Paint();
 	private Path mOutBorderPath = new Path();
 	private Path mValuePath = new Path();
-	private float mAnimatorOffset = 1f;
 	private int[] mValueRadius = new int[SIZE_ADAPTER];
 	private Point[][] points = new Point[5][SIZE_ADAPTER];
 	private Point[] pointValue = new Point[SIZE_ADAPTER];
-	private Shader gradient;
+	//不规则数据图形动画
 	private ValueAnimator animator;
+	private float mAnimatorOffset = 1f;
+	//边框动画
+	private Bitmap initBitmap;
+	private Paint initPaint = new Paint();
+	private int initAnimatorOffset;
+	private RectF initRectF;
+	private Shader initGradient;
 
 	private double SIN72, COS72, SIN36, COS36;
 	private ArrayList<Integer> colors = new ArrayList<>();
@@ -41,7 +51,6 @@ public class AttrTableView extends View {
 	private int cValueLine = Color.parseColor("#00e4ee");
 	private int pxTextSize = 39;
 	private int cTextColor = Color.BLACK;
-
 
 	private String[] label = {"温度", "湿度", "二氧化碳", "甲醛", "氧气"};
 	private float[][] VALUE = {
@@ -78,21 +87,21 @@ public class AttrTableView extends View {
 		mPaintBackGround.setTextSize(pxTextSize);
 		float labelWidth = mPaintBackGround.measureText(label[maxLabelIndex]);
 		mRadius = (int) (Math.min(mWidth, mHeight) / 2 - labelWidth);
-		if (gradient == null) {
-			int[] color = new int[colors.size()];
-			int size = colors.size();
-			for (int i = 0; i < size; i++) {
-				color[i] = colors.get(i);
-			}
-			gradient = new RadialGradient(mWidth / 2, mHeight / 2, mRadius
-					, color, null, Shader.TileMode.CLAMP);
-//			gradient = new LinearGradient(mWidth / 2, mHeight / 2, mWidth / 2 + mRadius, mWidth / 2
+//		if (initGradient == null) {
+//			int[] color = new int[colors.size()];
+//			int size = colors.size();
+//			for (int i = 0; i < size; i++) {
+//				color[i] = colors.get(i);
+//			}
+//			initGradient = new RadialGradient(mWidth / 2, mHeight / 2, mRadius
+//					, color, null, Shader.TileMode.CLAMP);
+//			initGradient = new LinearGradient(mWidth / 2, mHeight / 2, mWidth / 2 + mRadius, mWidth / 2
 //					, color
 //					, null, Shader.TileMode.CLAMP);
-//			gradient = new SweepGradient(mWidth / 2, mHeight / 2
+//			initGradient = new SweepGradient(mWidth / 2, mHeight / 2
 //					, color
 //					, null);
-		}
+//		}
 	}
 
 	private void init() {
@@ -129,7 +138,24 @@ public class AttrTableView extends View {
 		mPaintLabel.setColor(cTextColor);
 		mPaintLabel.setStyle(Paint.Style.FILL);
 
-		startAnimation();
+		initPaint.setStyle(Paint.Style.FILL);
+		final ValueAnimator initAnimator = ValueAnimator.ofInt(0, 360).setDuration(1000);
+		initAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation) {
+				initAnimatorOffset = (int) animation.getAnimatedValue();
+				postInvalidate();
+			}
+		});
+		initAnimator.addListener(new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				initBitmap.recycle();
+				initBitmap = null;
+				startAnimation();
+			}
+		});
+		initAnimator.start();
 	}
 
 	public void startAnimation() {
@@ -151,10 +177,25 @@ public class AttrTableView extends View {
 		int centerX = (int) mWidth / 2;
 		int centerY = (int) mHeight / 2;
 		initPoint(centerX, centerY);
-		drawBackGround(canvas);
-		drawLabel(canvas, centerX, centerY);
-		drawFrame(canvas, centerX, centerY);
-		drawValue(canvas, centerX, centerY);
+		if (initBitmap == null && initAnimatorOffset != 360) {
+			initBitmap = Bitmap.createBitmap((int) mWidth, (int) mHeight, Bitmap.Config.ARGB_8888);
+			Canvas canvasTemp = new Canvas(initBitmap);
+			drawBackGround(canvasTemp);
+			drawFrame(canvasTemp, centerX, centerY);
+			initGradient = new BitmapShader(initBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+			initPaint.setShader(initGradient);
+		} else if (initAnimatorOffset < 360) {
+			if (initRectF == null) {
+				initRectF = new RectF(centerX - mRadius, centerY - mRadius
+						, centerX + mRadius, centerY + mRadius);
+			}
+			canvas.drawArc(initRectF, -90, initAnimatorOffset, true, initPaint);
+		} else {
+			drawBackGround(canvas);
+			drawLabel(canvas, centerX, centerY);
+			drawFrame(canvas, centerX, centerY);
+			drawValue(canvas, centerX, centerY);
+		}
 	}
 
 	private void drawValue(Canvas canvas, int centerX, int centerY) {
