@@ -16,16 +16,9 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppSplash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+            android:theme="@style/AppSplash"></activity>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".ui.AttrTableViewActivity">
-        </activity>
+        <activity android:name=".ui.AttrTableViewActivity"></activity>
 
         <activity android:name=".resume.MyResumeActivity" />
 
@@ -41,8 +34,7 @@
             android:name=".ipc.bundle.BundleActivityClient"
             android:process=":bundle" />
 
-        <activity android:name=".ipc.messenger.MessengerActivityMain">
-        </activity>
+        <activity android:name=".ipc.messenger.MessengerActivityMain"></activity>
 
         <service
             android:name=".ipc.messenger.MessengerService"
@@ -61,11 +53,18 @@
             android:process=":aidl_demo" />
 
         <provider
-            android:authorities="com.lyq.mytimer.ipc.book_provider"
             android:name=".ipc.content_provider.BookProvider"
+            android:authorities="com.lyq.mytimer.ipc.book_provider"
             android:permission="com.lyq.PROVIDER"
-            android:process=":provider"
-            />
+            android:process=":provider" />
+
+        <activity android:name=".ipc.content_provider.ProviderActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
