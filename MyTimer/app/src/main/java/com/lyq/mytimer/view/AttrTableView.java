@@ -13,6 +13,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -38,6 +39,7 @@ public class AttrTableView extends View {
 	private ValueAnimator animator;
 	private float mAnimatorOffset = 1f;
 	//边框动画
+	private ValueAnimator initAnimator;
 	private Bitmap initBitmap;
 	private Paint initPaint = new Paint();
 	private int initAnimatorOffset;
@@ -54,13 +56,13 @@ public class AttrTableView extends View {
 
 	private String[] label = {"温度", "湿度", "二氧化碳", "甲醛", "氧气"};
 	private float[][] VALUE = {
-			{10, 15, 22, 26, 30}
-			, {10, 15, 22, 26, 30}
-			, {10, 15, 22, 26, 30}
-			, {10, 15, 22, 26, 30}
-			, {10, 15, 22, 26, 30}};
+			{10, 15, 22, 26, 28, 30}
+			, {10, 15, 22, 26, 28, 30}
+			, {10, 15, 22, 26, 28, 30}
+			, {10, 15, 22, 26, 28, 30}
+			, {10, 15, 22, 26, 28, 30}};
 	private ArrayList<Float> mValue = new ArrayList<>();
-	private int GRADE_0 = 0, GRADE_1 = 1, GRADE_2 = 2;
+	private final int GRADE_0 = 0, GRADE_1 = 1, GRADE_2 = 2;
 	private int mGrade;
 
 	public AttrTableView(Context context) {
@@ -87,21 +89,6 @@ public class AttrTableView extends View {
 		mPaintBackGround.setTextSize(pxTextSize);
 		float labelWidth = mPaintBackGround.measureText(label[maxLabelIndex]);
 		mRadius = (int) (Math.min(mWidth, mHeight) / 2 - labelWidth);
-//		if (initGradient == null) {
-//			int[] color = new int[colors.size()];
-//			int size = colors.size();
-//			for (int i = 0; i < size; i++) {
-//				color[i] = colors.get(i);
-//			}
-//			initGradient = new RadialGradient(mWidth / 2, mHeight / 2, mRadius
-//					, color, null, Shader.TileMode.CLAMP);
-//			initGradient = new LinearGradient(mWidth / 2, mHeight / 2, mWidth / 2 + mRadius, mWidth / 2
-//					, color
-//					, null, Shader.TileMode.CLAMP);
-//			initGradient = new SweepGradient(mWidth / 2, mHeight / 2
-//					, color
-//					, null);
-//		}
 	}
 
 	private void init() {
@@ -114,11 +101,11 @@ public class AttrTableView extends View {
 		colors.add(Color.parseColor("#54FF9F"));
 		colors.add(Color.parseColor("#4EEE94"));
 
-		mValue.add(9f);
-		mValue.add(14f);
-		mValue.add(23f);
 		mValue.add(25f);
-		mValue.add(100f);
+		mValue.add(25f);
+		mValue.add(25f);
+		mValue.add(25f);
+		mValue.add(25f);
 
 		for (int i = 0; i < SIZE_ADAPTER; i++) {
 			for (int j = 0; j < points[i].length; j++) {
@@ -139,22 +126,53 @@ public class AttrTableView extends View {
 		mPaintLabel.setStyle(Paint.Style.FILL);
 
 		initPaint.setStyle(Paint.Style.FILL);
-		final ValueAnimator initAnimator = ValueAnimator.ofInt(0, 360).setDuration(1000);
-		initAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-			@Override
-			public void onAnimationUpdate(ValueAnimator animation) {
-				initAnimatorOffset = (int) animation.getAnimatedValue();
-				postInvalidate();
-			}
-		});
-		initAnimator.addListener(new AnimatorListenerAdapter() {
-			@Override
-			public void onAnimationEnd(Animator animation) {
-				initBitmap.recycle();
-				initBitmap = null;
-				startAnimation();
-			}
-		});
+
+		startInitAnimation();
+	}
+
+	public String setData(ArrayList<Float> data) {
+		mValue.clear();
+		mValue.addAll(data);
+		mGrade = GRADE_0;
+		for (int i = 0; i < SIZE_ADAPTER; i++) {
+			int subIndex = getValueSubIndex(i, mValue.get(i), 1);
+			setGrade(subIndex);
+		}
+		startAnimation();
+		return getGrade();
+	}
+
+	public String getGrade() {
+		switch (mGrade) {
+			case GRADE_0:
+				return "优";
+			case GRADE_1:
+				return "良";
+			case GRADE_2:
+				return "差";
+		}
+		return "优";
+	}
+
+	public void startInitAnimation() {
+		if (initAnimator == null) {
+			initAnimator = ValueAnimator.ofInt(0, 360).setDuration(1000);
+			initAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+				@Override
+				public void onAnimationUpdate(ValueAnimator animation) {
+					initAnimatorOffset = (int) animation.getAnimatedValue();
+					postInvalidate();
+				}
+			});
+			initAnimator.addListener(new AnimatorListenerAdapter() {
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					initBitmap.recycle();
+					initBitmap = null;
+					startAnimation();
+				}
+			});
+		}
 		initAnimator.start();
 	}
 
@@ -165,7 +183,7 @@ public class AttrTableView extends View {
 				@Override
 				public void onAnimationUpdate(ValueAnimator animation) {
 					mAnimatorOffset = (float) animation.getAnimatedValue();
-					postInvalidate();
+					invalidate();
 				}
 			});
 		}
@@ -199,10 +217,10 @@ public class AttrTableView extends View {
 	}
 
 	private void drawValue(Canvas canvas, int centerX, int centerY) {
+		mGrade = GRADE_0;
 		for (int i = 0; i < SIZE_ADAPTER; i++) {
 			int subIndex = getValueSubIndex(i, mValue.get(i), 1);
 			setGrade(subIndex);
-			pointValue[i] = points[subIndex][i];
 			setValueRadius(i, subIndex);
 		}
 		initValuePoint(centerX, centerY);
@@ -217,16 +235,28 @@ public class AttrTableView extends View {
 		mValuePath.close();
 
 		mPaintValue.setStyle(Paint.Style.FILL);
-		mPaintValue.setColor(cValue);
+		mPaintValue.setColor(getValueColor(false));
 		canvas.drawPath(mValuePath, mPaintValue);
 
 		mPaintValue.setStrokeWidth(3);
 		mPaintValue.setStyle(Paint.Style.STROKE);
-		mPaintValue.setColor(cValueLine);
+		mPaintValue.setColor(getValueColor(true));
 		canvas.drawPath(mValuePath, mPaintValue);
 	}
 
-	private void setValueRadius(int i, int subIndex) {
+	public int getValueColor(boolean isLine) {
+		switch (mGrade) {
+			case GRADE_0:
+				return Color.parseColor(isLine ? "#00EE76" : "#4400CD66");
+			case GRADE_1:
+				return isLine ? cValueLine : cValue;
+			case GRADE_2:
+				return Color.parseColor(isLine ? "#FF4040" : "#44EE3B3B");
+		}
+		return isLine ? cValueLine : cValue;
+	}
+
+	private void setValueRadius(int i, @IntRange(from = 1, to = 5) int subIndex) {
 		if (subIndex == 0) {
 			mValueRadius[i] = 0;
 		}
@@ -253,11 +283,12 @@ public class AttrTableView extends View {
 		mGrade = GRADE_0;
 	}
 
+	@IntRange(from = 1, to = 5)
 	public int getValueSubIndex(int valueIndex, float value, int subIndex) {
 		if (value < VALUE[valueIndex][subIndex]) {
 			return subIndex;
 		} else {
-			if (subIndex == 4) {
+			if (subIndex == VALUE[valueIndex].length - 1) {
 				return subIndex;
 			} else {
 				return getValueSubIndex(valueIndex, value, subIndex + 1);
@@ -304,7 +335,7 @@ public class AttrTableView extends View {
 
 	private void initPoint(int centerX, int centerY) {
 		for (int i = 0; i < SIZE_ADAPTER; i++) {
-			initPoint(i, centerX, centerY, (int) (mRadius * (0.2 * i)));
+			initPoint(i, centerX, centerY, (int) (mRadius * (0.2 + 0.2 * i)));
 		}
 	}
 

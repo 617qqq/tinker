@@ -16,7 +16,13 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppSplash"></activity>
+            android:theme="@style/AppSplash">
+            <intent-filter>
+                    <action android:name="android.intent.action.MAIN"/>
+
+                    <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
         <activity android:name=".ui.AttrTableViewActivity"></activity>
 
@@ -59,11 +65,6 @@
             android:process=":provider" />
 
         <activity android:name=".ipc.content_provider.ProviderActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
