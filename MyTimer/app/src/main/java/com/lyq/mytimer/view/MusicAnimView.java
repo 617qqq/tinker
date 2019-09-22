@@ -114,7 +114,7 @@ public class MusicAnimView extends View {
 
 	private void drawBorder(Canvas canvas) {
 		mPaintPoint.setColor(Color.parseColor("#44000000"));
-		canvas.drawCircle(mWidth / 2, mHeight / 2, mCenterRadius + 10, mPaintPoint);
+		canvas.drawCircle(mWidth / 2, mHeight / 2, mCenterRadius + 15, mPaintPoint);
 	}
 
 	private void drawCentre(Canvas canvas) {

@@ -9,6 +9,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //使用renderscript 兼容包
+        renderscriptTargetApi 25
+        renderscriptSupportModeEnabled true
     }
     buildTypes {
         release {
@@ -40,4 +44,6 @@ dependencies {
     //https://github.com/ReactiveX/RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
+    //https://github.com/pinguo-zhouwei/EasyBlur
+    implementation 'com.github.pinguo-zhouwei:EasyBlur:v1.0.0'
 }
