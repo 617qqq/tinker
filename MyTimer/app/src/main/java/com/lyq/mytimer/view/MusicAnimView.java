@@ -65,9 +65,11 @@ public class MusicAnimView extends View {
 
 	private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
 
+	private int resId = R.drawable.rect_re;
+
 	private Bitmap getBitmap() {
 		try {
-			Drawable drawable = getResources().getDrawable(R.drawable.rect_re);
+			Drawable drawable = getResources().getDrawable(resId);
 			Bitmap bitmap = Bitmap.createBitmap((int) mWidth, (int) mHeight, BITMAP_CONFIG);
 			Canvas canvas = new Canvas(bitmap);
 			drawable.setBounds((int) mWidth / 2 - mCenterRadius
@@ -100,6 +102,13 @@ public class MusicAnimView extends View {
 		mPaintPoint.setStyle(Paint.Style.FILL);
 
 		startTime = System.currentTimeMillis();
+	}
+
+	public void setBitmap(int resId){
+		this.resId = resId;
+		BitmapShader shader = new BitmapShader(getBitmap(),
+				Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+		mPaintCentre.setShader(shader);
 	}
 
 
