@@ -67,6 +67,7 @@
         <activity android:name=".ipc.content_provider.ProviderActivity">
         </activity>
         <activity android:name=".ui.MusicAnimActivity" />
+        <activity android:name=".ui.DebutActivity" />
     </application>
 
 </manifest>
