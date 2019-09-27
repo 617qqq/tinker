@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root_activity_music_anim"
+    android:id="@+id/root_activity_debut"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000">
@@ -15,8 +15,8 @@
         android:id="@+id/img"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
+        android:scaleX="1"
+        android:scaleY="1"
         android:src="@drawable/rect_re"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

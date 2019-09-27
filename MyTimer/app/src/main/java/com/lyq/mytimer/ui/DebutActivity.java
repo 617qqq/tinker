@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,14 +33,22 @@ public class DebutActivity extends BaseActivity {
 		TextView textView = findViewById(R.id.tv_content);
 		textView.setBackground(new DebutDrawable());
 
-		ImageView imageView = findViewById(R.id.img);
+		final ImageView imageView = findViewById(R.id.img);
 		final AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.anim_debut);
-		set.setTarget(imageView);
-		set.start();
+
+		final ConstraintLayout layout = findViewById(R.id.root_activity_debut);
+		LayoutAnimationController controller = new LayoutAnimationController(
+				AnimationUtils.loadAnimation(this, R.anim.anim_debut)
+		);
+		controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
+		controller.setDelay(1f);
+		layout.setLayoutAnimation(controller);
 
 		imageView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				set.setTarget(imageView);
+				set.start();
 				set.start();
 			}
 		});
