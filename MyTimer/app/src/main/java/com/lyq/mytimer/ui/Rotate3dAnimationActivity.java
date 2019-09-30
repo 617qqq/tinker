@@ -37,10 +37,12 @@ public class Rotate3dAnimationActivity extends BaseActivity {
 	private void anim(ImageView imageView) {
 		x += 10;
 		Rotate3dAnimation animation = new Rotate3dAnimation(
-				0, x, imageView.getWidth() / 2,
-				imageView.getHeight() / 2, 0, true
+				0, 360, imageView.getWidth() / 2,
+				imageView.getHeight() / 2, 0, false
 		);
-		animation.setDuration(10000);
+		animation.setFillAfter(true);
+		animation.setDuration(2000);
+		animation.setRepeatCount(-1);
 		imageView.startAnimation(animation);
 	}
 }
