@@ -69,6 +69,7 @@
         <activity android:name=".ui.MusicAnimActivity" />
         <activity android:name=".ui.DebutActivity" />
         <activity android:name=".ui.Rotate3dAnimationActivity"/>
+        <activity android:name=".ui.ControlActivity"/>
     </application>
 
 </manifest>

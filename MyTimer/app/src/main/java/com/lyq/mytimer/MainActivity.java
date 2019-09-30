@@ -4,8 +4,7 @@ import android.os.Bundle;
 
 import com.lyq.mytimer.base.BaseActivity;
 import com.lyq.mytimer.resume.MyResumeActivity;
-import com.lyq.mytimer.ui.DebutActivity;
-import com.lyq.mytimer.ui.Rotate3dAnimationActivity;
+import com.lyq.mytimer.ui.ControlActivity;
 import com.lyq.mytimer.view.MyTimeView;
 
 import java.util.concurrent.TimeUnit;
@@ -38,8 +37,9 @@ public class MainActivity extends BaseActivity {
 					public void accept(Long aLong) throws Exception {
 						//AttrTableViewActivity.startAction(MainActivity.this);
 //						MusicAnimActivity.startAction(MainActivity.this);
-						DebutActivity.start(MainActivity.this);
+//						DebutActivity.start(MainActivity.this);
 //						Rotate3dAnimationActivity.start(MainActivity.this);
+						ControlActivity.start(MainActivity.this);
 					}
 				}).isDisposed();
 	}
