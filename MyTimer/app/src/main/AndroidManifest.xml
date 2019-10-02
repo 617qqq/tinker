@@ -70,6 +70,7 @@
         <activity android:name=".ui.DebutActivity" />
         <activity android:name=".ui.Rotate3dAnimationActivity"/>
         <activity android:name=".ui.ControlActivity"/>
+        <activity android:name=".ui.TimeActivity"/>
     </application>
 
 </manifest>
