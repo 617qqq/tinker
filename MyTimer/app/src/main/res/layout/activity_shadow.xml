@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <SeekBar
+        android:id="@+id/seek_bar_radius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="1000"
+        android:padding="10dp"
+        android:progress="0"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seek_bar_x"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:padding="10dp"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@id/seek_bar_radius" />
+
+    <SeekBar
+        android:id="@+id/seek_bar_y"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:padding="10dp"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@id/seek_bar_x" />
+
+</android.support.constraint.ConstraintLayout>
