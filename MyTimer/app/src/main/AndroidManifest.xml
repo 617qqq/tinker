@@ -64,6 +64,9 @@
             android:permission="com.lyq.PROVIDER"
             android:process=":provider" />
 
+        <activity android:name=".ipc.socket.TCPClientActivity"/>
+        <service android:name=".ipc.socket.TCPServerService"/>
+
         <activity android:name=".ipc.content_provider.ProviderActivity">
         </activity>
         <activity android:name=".ui.MusicAnimActivity" />
