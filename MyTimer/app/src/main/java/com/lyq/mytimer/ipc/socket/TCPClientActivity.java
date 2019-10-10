@@ -65,15 +65,13 @@ public class TCPClientActivity extends Activity implements OnClickListener {
 		mMessageTextView = (TextView) findViewById(R.id.msg_container);
 		mSendButton = (Button) findViewById(R.id.send);
 		mSendButton.setOnClickListener(this);
+		mSendButton.setEnabled(true);
 		mMessageEditText = (EditText) findViewById(R.id.msg);
+
+		mMessageEditText.setText(MyUtils.getIPAddress(this));
+
 		Intent service = new Intent(this, TCPServerService.class);
 		startService(service);
-		new Thread() {
-			@Override
-			public void run() {
-				connectTCPServer();
-			}
-		}.start();
 	}
 
 	@Override
@@ -93,12 +91,31 @@ public class TCPClientActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if (v == mSendButton) {
 			final String msg = mMessageEditText.getText().toString();
-			if (! TextUtils.isEmpty(msg) && mPrintWriter != null) {
-				mPrintWriter.println(msg);
-				mMessageEditText.setText("");
-				String time = formatDateTime(System.currentTimeMillis());
-				final String showedMsg = "self " + time + ":" + msg + "\n";
-				mMessageTextView.setText(mMessageTextView.getText() + showedMsg);
+			if (mClientSocket != null) {
+				if (! TextUtils.isEmpty(msg) && mPrintWriter != null) {
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							mPrintWriter.println(msg);
+							String time = formatDateTime(System.currentTimeMillis());
+							final String showedMsg = "self " + time + ":" + msg + "\n";
+							TCPClientActivity.this.runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									mMessageEditText.setText("");
+									mMessageTextView.setText(mMessageTextView.getText() + showedMsg);
+								}
+							});
+						}
+					}).start();
+				}
+			} else {
+				new Thread() {
+					@Override
+					public void run() {
+						connectTCPServer(msg);
+					}
+				}.start();
 			}
 		}
 	}
@@ -108,11 +125,11 @@ public class TCPClientActivity extends Activity implements OnClickListener {
 		return new SimpleDateFormat("(HH:mm:ss)").format(new Date(time));
 	}
 
-	private void connectTCPServer() {
+	private void connectTCPServer(String ip) {
 		Socket socket = null;
 		while (socket == null) {
 			try {
-				socket = new Socket("localhost", 8688);
+				socket = new Socket(ip, 8688);
 				mClientSocket = socket;
 				mPrintWriter = new PrintWriter(new BufferedWriter(
 						new OutputStreamWriter(socket.getOutputStream())), true);

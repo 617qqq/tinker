@@ -9,6 +9,7 @@ import com.lyq.mytimer.adapter.MainAdapter;
 import com.lyq.mytimer.adapter.OnListClickListener;
 import com.lyq.mytimer.base.BaseActivity;
 import com.lyq.mytimer.info.ModuleInfo;
+import com.lyq.mytimer.ipc.socket.TCPClientActivity;
 import com.lyq.mytimer.resume.MyResumeActivity;
 import com.lyq.mytimer.ui.AttrTableViewActivity;
 import com.lyq.mytimer.ui.ControlActivity;
@@ -49,6 +50,7 @@ public class MainActivity extends BaseActivity {
 		mData.add(new ModuleInfo(Rotate3dAnimationActivity.class, "3D动画", "翻盘动画效果"));
 		mData.add(new ModuleInfo(ControlActivity.class, "控制按钮", "不规则区域点击事件"));
 		mData.add(new ModuleInfo(ShadowActivity.class, "阴影", "阴影Drawable"));
+		mData.add(new ModuleInfo(TCPClientActivity.class, "TCP", "IPC-socket"));
 
 		mAdapter.notifyDataSetChanged();
 	}
