@@ -2,7 +2,6 @@ package com.lyq.mytimer.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -17,10 +16,10 @@ public class ShadowActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shadow);
 
-		final ShadowDrawable drawable = new ShadowDrawable();
 		TextView tv = findViewById(R.id.tv_shadow);
+		final ShadowDrawable drawable = new ShadowDrawable(tv);
+		drawable.setCorner(100,60,60,100);
 		tv.setBackground(drawable);
-		tv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
 		SeekBar seekBar = findViewById(R.id.seek_bar_radius);
 		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
