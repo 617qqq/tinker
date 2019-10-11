@@ -1,19 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_activity_music_anim"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="#000">
 
     <ImageView
         android:id="@+id/img"
         android:layout_width="match_parent"
-        android:scaleType="fitXY"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
 
     <com.lyq.mytimer.view.MusicAnimView
         android:id="@+id/music_anim_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/btn_previous"
+        style="@style/btn_normal"
+        android:layout_marginBottom="20dp"
+        android:text="下一曲"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_action"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/btn_action"
+        style="@style/btn_normal"
+        android:text="播放"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_previous"
+        app:layout_constraintEnd_toStartOf="@id/btn_next"
+        app:layout_constraintStart_toEndOf="@+id/btn_previous" />
+
+    <TextView
+        android:id="@+id/btn_next"
+        style="@style/btn_normal"
+        android:text="上一曲"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_previous"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_action" />
 
 </android.support.constraint.ConstraintLayout>

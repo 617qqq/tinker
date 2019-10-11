@@ -168,6 +168,18 @@ public class MusicAnimView extends View {
 		}
 	}
 
+	public void toPrevious(int bitmapId) {
+
+	}
+
+	public void updateState(boolean isPlaying) {
+
+	}
+
+	public void toNext(int bitmapId) {
+
+	}
+
 	static class Circle {
 		/** 小圆点所在角度 */
 		float pointAngle;
