@@ -6,7 +6,6 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
@@ -21,14 +20,19 @@ import java.util.Random;
 public class MusicAnimView extends View {
 
 	private float mWidth, mHeight;
+	/** 最大半径 */
 	private int mRadius;
+	/** 中心圆半径 */
 	private int mCenterRadius;
 	private ArrayList<Circle> mCircle = new ArrayList<>();
 	private Paint mPaint;
-	private Paint mPaintCentre;
+	private Paint mPaintCenter;
 	private Paint mPaintPoint;
-	private Path mPath = new Path();
 
+	/** 中心圆旋转一周所用时间 */
+	private static float TIME_MIN_CIRCLE_ANGLE = 10000.0f;
+	/** 线从出现到消失所用时间 */
+	private static float TIME_CIRCLE_RADIUS = 3000.0f;
 
 	public MusicAnimView(Context context) {
 		super(context);
@@ -53,13 +57,13 @@ public class MusicAnimView extends View {
 		mRadius = (int) (Math.min(mWidth, mHeight) / 2);
 		mCenterRadius = mRadius * 3 / 5;
 		buildCircle();
-		if (mPaintCentre == null) {
-			mPaintCentre = new Paint();
-			mPaintCentre.setAntiAlias(true);
+		if (mPaintCenter == null) {
+			mPaintCenter = new Paint();
+			mPaintCenter.setAntiAlias(true);
 			BitmapShader shader = new BitmapShader(getBitmap(),
 					Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-			mPaintCentre.setShader(shader);
-			mPaintCentre.setStyle(Paint.Style.FILL);
+			mPaintCenter.setShader(shader);
+			mPaintCenter.setStyle(Paint.Style.FILL);
 		}
 	}
 
@@ -84,8 +88,10 @@ public class MusicAnimView extends View {
 	}
 
 	private void buildCircle() {
-		for (int i = 0; i < 3; i++) {
-			mCircle.add(Circle.build(mCenterRadius, i));
+		mCircle.clear();
+		startTime = lastResetTime = System.currentTimeMillis();
+		for (int i = 0; i < Circle.MAX_NUM; i++) {
+			mCircle.add(Circle.build());
 		}
 	}
 
@@ -96,120 +102,121 @@ public class MusicAnimView extends View {
 		mPaint.setAntiAlias(true);
 		mPaint.setStrokeWidth(3);
 		mPaint.setStyle(Paint.Style.STROKE);
+		mPaint.setColor(Color.WHITE);
 
 		mPaintPoint = new Paint();
 		mPaintPoint.setAntiAlias(true);
 		mPaintPoint.setStyle(Paint.Style.FILL);
-
-		startTime = System.currentTimeMillis();
+		mPaintPoint.setColor(Color.WHITE);
 	}
 
-	public void setBitmap(int resId){
+	public void setBitmap(int resId) {
 		this.resId = resId;
 		BitmapShader shader = new BitmapShader(getBitmap(),
 				Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-		mPaintCentre.setShader(shader);
+		mPaintCenter.setShader(shader);
 	}
 
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		drawCircle(canvas);
+		long curTime = System.currentTimeMillis();
+
+		drawCircle(canvas, curTime);
 		drawBorder(canvas);
-		drawCentre(canvas);
+		drawCenter(canvas, curTime);
 		postInvalidate();
 	}
 
 	private void drawBorder(Canvas canvas) {
-		mPaintPoint.setColor(Color.parseColor("#44000000"));
+		mPaintPoint.setAlpha(70);
 		canvas.drawCircle(mWidth / 2, mHeight / 2, mCenterRadius + 15, mPaintPoint);
 	}
 
-	private void drawCentre(Canvas canvas) {
-		float offset = (float) (System.currentTimeMillis() - startTime) / 10000f;
+	private void drawCenter(Canvas canvas, long time) {
+		float offset = (float) (time - startTime) / TIME_MIN_CIRCLE_ANGLE;
 		canvas.save();
 		canvas.translate(mWidth / 2, mHeight / 2);
 		canvas.rotate(360 * offset % 360);
-		canvas.translate(-mWidth / 2, -mHeight / 2);
-		canvas.drawCircle(mWidth / 2, mHeight / 2, mCenterRadius, mPaintCentre);
+		canvas.translate(- mWidth / 2, - mHeight / 2);
+		canvas.drawCircle(mWidth / 2, mHeight / 2, mCenterRadius, mPaintCenter);
 		canvas.restore();
 	}
 
-	private void drawCircle(Canvas canvas) {
+	private void drawCircle(Canvas canvas, long curTime) {
 		for (Circle item : mCircle) {
-			float offset = (float) (System.currentTimeMillis() - item.buildTime) / 3000.0f;
-			float radius = (mRadius - mCenterRadius) * offset + item.radius;
+			float radius = item.getCurRadius(curTime, mCenterRadius, mRadius);
 			if (radius < mRadius) {
-				mPath.reset();
-				mPath.addCircle(mWidth / 2, mHeight / 2, radius, Path.Direction.CW);
+				int alpha = 255 - (int) (255f * (curTime - item.buildTime) / TIME_CIRCLE_RADIUS);
+				mPaint.setAlpha(alpha);
+				mPaintPoint.setAlpha(alpha);
 
-				int color = getColor(radius);
-				mPaint.setColor(color);
-				mPaintPoint.setColor(color);
-
-				canvas.drawPath(mPath, mPaint);
+				canvas.drawCircle(mWidth / 2, mHeight / 2, radius, mPaint);
 
 				canvas.save();
-				canvas.translate(mWidth/2, mHeight/2);
-				canvas.rotate(item.pointAngle + 90 * offset);
-				canvas.drawCircle(radius, 0 , item.pointRadius, mPaintPoint);
+				canvas.translate(mWidth / 2, mHeight / 2);
+				canvas.rotate(item.getPointAngle(curTime));
+				canvas.drawCircle(radius, 0, item.pointRadius, mPaintPoint);
 				canvas.restore();
 			} else {
-				item.reset(mCenterRadius);
+				item.reset();
 			}
 		}
 	}
 
-	private int getColor(float radius) {
-		int i = (int) (radius - mCenterRadius) / ((mRadius - mCenterRadius) / 6);
-		return Circle.color[Math.max(0, Math.min(i, 5))];
-	}
+	public static long lastResetTime;
 
 	static class Circle {
 		float pointAngle;
 		float pointRadius;
-		float radius;
 		long buildTime;
 
-		static int count = 6;
-
-		static int[] color = {
-				Color.parseColor("#AAFFFFFF"),
-				Color.parseColor("#88FFFFFF"),
-				Color.parseColor("#66FFFFFF"),
-				Color.parseColor("#44FFFFFF"),
-				Color.parseColor("#22FFFFFF"),
-				Color.parseColor("#00FFFFFF"),
-		};
+		private static final int MAX_NUM = 4;
+		private static float TIME_DIVIDE = TIME_CIRCLE_RADIUS / MAX_NUM;
 
 		static Random random = new Random();
 
-		public Circle(float pointAngle, float pointRadius, float radius, long buildTime) {
+		Circle(float pointAngle, float pointRadius, long buildTime) {
 			this.pointAngle = pointAngle;
 			this.pointRadius = pointRadius;
-			this.radius = radius;
 			this.buildTime = buildTime;
 		}
 
-		static Circle build(int maxRadius, int index) {
-			int itemRadius = maxRadius / count;
-			float randomRadius = maxRadius + random.nextInt(itemRadius / 3) - itemRadius / 3;
-			long time = System.currentTimeMillis() + 1000 * index;
-
+		static Circle build() {
+			resetBuildTime();
 			return new Circle(
 					(float) random.nextInt(360),
 					random.nextInt(8) + random.nextFloat() + 5,
-					randomRadius, time
+					lastResetTime
 			);
 		}
 
-		public void reset(int maxRadius) {
-			int itemRadius = maxRadius / count;
-			radius = maxRadius + random.nextInt(itemRadius / 3) - itemRadius / 3;
-			buildTime = System.currentTimeMillis();
+		float getCurRadius(long curTime, float centerRadius, float maxRadius) {
+			float offset = (float) (curTime - buildTime) / TIME_CIRCLE_RADIUS;
+			return (maxRadius - centerRadius) * offset + centerRadius;
+		}
+
+		/**
+		 * @return TIME_CIRCLE_RADIUS 时间内移动弧度为90度
+		 */
+		float getPointAngle(long curTime) {
+			float offset = (float) (curTime - buildTime) / TIME_CIRCLE_RADIUS;
+			return pointAngle + 90 * offset;
+		}
+
+		void reset() {
+			resetBuildTime();
+
+			buildTime = lastResetTime;
 			pointRadius = random.nextInt(8) + random.nextFloat() + 5;
 			pointAngle = random.nextInt(360);
+		}
+
+		private static void resetBuildTime() {
+			lastResetTime = lastResetTime
+					+ (long) TIME_DIVIDE
+					+ random.nextInt((int) TIME_DIVIDE / 2);
 		}
 	}
 }
