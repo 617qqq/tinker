@@ -24,15 +24,25 @@ public class MusicAnimView extends View {
 	private int mRadius;
 	/** 中心圆半径 */
 	private int mCenterRadius;
+	/** 圆圈对象 */
 	private ArrayList<Circle> mCircle = new ArrayList<>();
+	/** 圆圈画笔 */
 	private Paint mPaint;
+	/** 中心画笔 */
 	private Paint mPaintCenter;
+	/** 小圆点和中心轮廓的画笔 */
 	private Paint mPaintPoint;
-
 	/** 中心圆旋转一周所用时间 */
 	private static float TIME_MIN_CIRCLE_ANGLE = 10000.0f;
 	/** 线从出现到消失所用时间 */
 	private static float TIME_CIRCLE_RADIUS = 3000.0f;
+	/** 最后生成圆圈的时间 */
+	private static long lastResetTime;
+	/** 动画开始时间 */
+	private long startTime;
+	/** 默认图片 */
+	private int resId = R.drawable.rect_re;
+	private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
 
 	public MusicAnimView(Context context) {
 		super(context);
@@ -67,10 +77,6 @@ public class MusicAnimView extends View {
 		}
 	}
 
-	private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
-
-	private int resId = R.drawable.rect_re;
-
 	private Bitmap getBitmap() {
 		try {
 			Drawable drawable = getResources().getDrawable(resId);
@@ -95,8 +101,6 @@ public class MusicAnimView extends View {
 		}
 	}
 
-	long startTime;
-
 	private void init() {
 		mPaint = new Paint();
 		mPaint.setAntiAlias(true);
@@ -116,7 +120,6 @@ public class MusicAnimView extends View {
 				Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 		mPaintCenter.setShader(shader);
 	}
-
 
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -151,9 +154,9 @@ public class MusicAnimView extends View {
 				int alpha = 255 - (int) (255f * (curTime - item.buildTime) / TIME_CIRCLE_RADIUS);
 				mPaint.setAlpha(alpha);
 				mPaintPoint.setAlpha(alpha);
-
+				//绘制圆圈
 				canvas.drawCircle(mWidth / 2, mHeight / 2, radius, mPaint);
-
+				//绘制小圆点
 				canvas.save();
 				canvas.translate(mWidth / 2, mHeight / 2);
 				canvas.rotate(item.getPointAngle(curTime));
@@ -165,14 +168,16 @@ public class MusicAnimView extends View {
 		}
 	}
 
-	public static long lastResetTime;
-
 	static class Circle {
+		/** 小圆点所在角度 */
 		float pointAngle;
+		/** 小圆点半径 */
 		float pointRadius;
+		/** 重置时间（出现时间） */
 		long buildTime;
-
+		/** 圆圈最大数量，实际为MAX_NUM-1，因为只有随机数全部为0时才能同时显示4条 */
 		private static final int MAX_NUM = 4;
+		/** 圆圈间隔 */
 		private static float TIME_DIVIDE = TIME_CIRCLE_RADIUS / MAX_NUM;
 
 		static Random random = new Random();
@@ -192,19 +197,6 @@ public class MusicAnimView extends View {
 			);
 		}
 
-		float getCurRadius(long curTime, float centerRadius, float maxRadius) {
-			float offset = (float) (curTime - buildTime) / TIME_CIRCLE_RADIUS;
-			return (maxRadius - centerRadius) * offset + centerRadius;
-		}
-
-		/**
-		 * @return TIME_CIRCLE_RADIUS 时间内移动弧度为90度
-		 */
-		float getPointAngle(long curTime) {
-			float offset = (float) (curTime - buildTime) / TIME_CIRCLE_RADIUS;
-			return pointAngle + 90 * offset;
-		}
-
 		void reset() {
 			resetBuildTime();
 
@@ -217,6 +209,22 @@ public class MusicAnimView extends View {
 			lastResetTime = lastResetTime
 					+ (long) TIME_DIVIDE
 					+ random.nextInt((int) TIME_DIVIDE / 2);
+		}
+
+		/**
+		 * @return TIME_CIRCLE_RADIUS 时间内半径增加的是 maxRadius - centerRadius
+		 */
+		float getCurRadius(long curTime, float centerRadius, float maxRadius) {
+			float offset = (float) (curTime - buildTime) / TIME_CIRCLE_RADIUS;
+			return (maxRadius - centerRadius) * offset + centerRadius;
+		}
+
+		/**
+		 * @return TIME_CIRCLE_RADIUS 时间内移动弧度为90度
+		 */
+		float getPointAngle(long curTime) {
+			float offset = (float) (curTime - buildTime) / TIME_CIRCLE_RADIUS;
+			return pointAngle + 90 * offset;
 		}
 	}
 }
