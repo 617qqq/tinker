@@ -44,7 +44,7 @@ public class MusicAnimView extends View {
 	/** 最后生成圆圈的时间 */
 	private static long lastResetTime;
 	/** 默认图片 */
-	private int resId = R.drawable.rect_re;
+	private int resId = R.drawable.rect_music;
 	/** 是否正在播放 */
 	private boolean isPlaying;
 	private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
@@ -190,7 +190,11 @@ public class MusicAnimView extends View {
 	}
 
 	public void toPrevious(int bitmapId) {
-
+		setBitmap(bitmapId);
+		if (isPlaying){
+			centerAnimTime = System.currentTimeMillis();
+		}
+		centerLastAngle = 0;
 	}
 
 	public void updateState(boolean isPlaying) {
@@ -202,7 +206,11 @@ public class MusicAnimView extends View {
 	}
 
 	public void toNext(int bitmapId) {
-
+		setBitmap(bitmapId);
+		if (isPlaying){
+			centerAnimTime = System.currentTimeMillis();
+		}
+		centerLastAngle = 0;
 	}
 
 	static class Circle {

@@ -1,5 +1,8 @@
 package com.lyq.mytimer.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,13 +22,14 @@ import com.zhouwei.blurlibrary.EasyBlur;
 public class MusicAnimActivity extends BaseActivity implements View.OnClickListener {
 
 	private MusicAnimView musicAnimView;
-	private ImageView img;
+	private ImageView img1, img2;
 	private TextView tvPrevious, tvAction, tvNext;
 
 	/** 是否是播放中 */
 	private boolean isPlaying;
+	private ValueAnimator animator;
 
-	private int[] resId;
+	private int[] resId = {R.drawable.rect_music, R.drawable.rect_re, R.drawable.rect_shelter};
 
 	private int curIndex;
 
@@ -42,14 +46,16 @@ public class MusicAnimActivity extends BaseActivity implements View.OnClickListe
 		setContentView(R.layout.activity_music_anim);
 
 		musicAnimView = findViewById(R.id.music_anim_view);
-		img = findViewById(R.id.img);
+		img1 = findViewById(R.id.img1);
+		img2 = findViewById(R.id.img2);
 
-		Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.bg_re);
+		Bitmap overlay = BitmapFactory.decodeResource(getResources(), resId[0]);
 		Bitmap finalBitmap = EasyBlur.with(this)
 				.bitmap(overlay) //要模糊的图片
-				.radius(24)//模糊半径
+				.radius(25)//模糊半径
 				.blur();
-		img.setImageBitmap(finalBitmap);
+		img1.setImageBitmap(finalBitmap);
+		img2.setImageBitmap(finalBitmap);
 
 		tvPrevious = findViewById(R.id.btn_previous);
 		tvAction = findViewById(R.id.btn_action);
@@ -58,6 +64,27 @@ public class MusicAnimActivity extends BaseActivity implements View.OnClickListe
 		tvPrevious.setOnClickListener(this);
 		tvAction.setOnClickListener(this);
 		tvNext.setOnClickListener(this);
+
+		initAnimator();
+	}
+
+	private void initAnimator() {
+		animator = ValueAnimator.ofFloat(0f, 1f).setDuration(500);
+		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation) {
+				float value = (float) animation.getAnimatedValue();
+				img1.setAlpha(value);
+				img2.setAlpha(1 - value);
+			}
+		});
+		animator.addListener(new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				super.onAnimationEnd(animation);
+				img2.setAlpha(1f);
+			}
+		});
 	}
 
 	@Override
@@ -69,9 +96,8 @@ public class MusicAnimActivity extends BaseActivity implements View.OnClickListe
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_previous:
-				int index = curIndex - 1 + resId.length;
-				index = index % resId.length;
-				musicAnimView.toPrevious(resId[index]);
+				changeCurrentIndex(false);
+				musicAnimView.toPrevious(resId[curIndex]);
 				break;
 			case R.id.btn_action:
 				isPlaying = ! isPlaying;
@@ -79,10 +105,21 @@ public class MusicAnimActivity extends BaseActivity implements View.OnClickListe
 				musicAnimView.updateState(isPlaying);
 				break;
 			case R.id.btn_next:
-				int next = curIndex + 1 + resId.length;
-				next = next % resId.length;
-				musicAnimView.toNext(resId[next]);
+				changeCurrentIndex(true);
+				musicAnimView.toNext(resId[curIndex]);
 				break;
 		}
+	}
+
+	public void changeCurrentIndex(boolean isNext) {
+		curIndex = (curIndex + (isNext ? 1 : - 1) + resId.length) % resId.length;
+		Bitmap overlay = BitmapFactory.decodeResource(getResources(), resId[curIndex]);
+		Bitmap finalBitmap = EasyBlur.with(this)
+				.bitmap(overlay) //要模糊的图片
+				.radius(24)//模糊半径
+				.blur();
+		img1.setImageBitmap(finalBitmap);
+		img1.setAlpha(0f);
+		animator.start();
 	}
 }

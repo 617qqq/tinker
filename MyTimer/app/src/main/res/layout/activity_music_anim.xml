@@ -7,8 +7,15 @@
     android:layout_height="match_parent"
     tools:background="#000">
 
+
     <ImageView
-        android:id="@+id/img"
+        android:id="@+id/img2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/img1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
@@ -22,7 +29,7 @@
         android:id="@+id/btn_previous"
         style="@style/btn_normal"
         android:layout_marginBottom="20dp"
-        android:text="下一曲"
+        android:text="上一曲"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_action"
         app:layout_constraintStart_toStartOf="parent" />
@@ -38,7 +45,7 @@
     <TextView
         android:id="@+id/btn_next"
         style="@style/btn_normal"
-        android:text="上一曲"
+        android:text="下一曲"
         app:layout_constraintBaseline_toBaselineOf="@+id/btn_previous"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn_action" />
