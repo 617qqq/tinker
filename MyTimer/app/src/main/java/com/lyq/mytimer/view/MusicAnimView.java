@@ -19,6 +19,11 @@ import java.util.Random;
 
 public class MusicAnimView extends View {
 
+	/** 中心圆旋转一周所用时间 */
+	private static float TIME_MIN_CIRCLE_ANGLE = 10000.0f;
+	/** 线从出现到消失所用时间 */
+	private static float TIME_CIRCLE_RADIUS = 3000.0f;
+
 	private float mWidth, mHeight;
 	/** 最大半径 */
 	private int mRadius;
@@ -32,16 +37,16 @@ public class MusicAnimView extends View {
 	private Paint mPaintCenter;
 	/** 小圆点和中心轮廓的画笔 */
 	private Paint mPaintPoint;
-	/** 中心圆旋转一周所用时间 */
-	private static float TIME_MIN_CIRCLE_ANGLE = 10000.0f;
-	/** 线从出现到消失所用时间 */
-	private static float TIME_CIRCLE_RADIUS = 3000.0f;
+	/** 暂停时中心转动角度 */
+	private float centerLastAngle;
+	/** 中心转动开始时间戳。暂停时会标记时间戳为0，为0时使用最后的角度 */
+	private long centerAnimTime;
 	/** 最后生成圆圈的时间 */
 	private static long lastResetTime;
-	/** 动画开始时间 */
-	private long startTime;
 	/** 默认图片 */
 	private int resId = R.drawable.rect_re;
+	/** 是否正在播放 */
+	private boolean isPlaying;
 	private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
 
 	public MusicAnimView(Context context) {
@@ -95,7 +100,7 @@ public class MusicAnimView extends View {
 
 	private void buildCircle() {
 		mCircle.clear();
-		startTime = lastResetTime = System.currentTimeMillis();
+		centerAnimTime = lastResetTime = System.currentTimeMillis();
 		for (int i = 0; i < Circle.MAX_NUM; i++) {
 			mCircle.add(Circle.build());
 		}
@@ -138,10 +143,22 @@ public class MusicAnimView extends View {
 	}
 
 	private void drawCenter(Canvas canvas, long time) {
-		float offset = (float) (time - startTime) / TIME_MIN_CIRCLE_ANGLE;
+		//暂停时会startTime戳为0，为0时使用最后的角度
+		float angle;
+		if (centerAnimTime != 0) {
+			float offset = (float) (time - centerAnimTime) / TIME_MIN_CIRCLE_ANGLE;
+			angle = (centerLastAngle + 360 * offset) % 360;
+		} else {
+			angle = centerLastAngle;
+		}
+		if (! isPlaying) {
+			//暂停，标记时间戳为0，记录最后的角度
+			centerLastAngle = angle;
+			centerAnimTime = 0;
+		}
 		canvas.save();
 		canvas.translate(mWidth / 2, mHeight / 2);
-		canvas.rotate(360 * offset % 360);
+		canvas.rotate(angle);
 		canvas.translate(- mWidth / 2, - mHeight / 2);
 		canvas.drawCircle(mWidth / 2, mHeight / 2, mCenterRadius, mPaintCenter);
 		canvas.restore();
@@ -151,18 +168,22 @@ public class MusicAnimView extends View {
 		for (Circle item : mCircle) {
 			float radius = item.getCurRadius(curTime, mCenterRadius, mRadius);
 			if (radius < mRadius) {
-				int alpha = 255 - (int) (255f * (curTime - item.buildTime) / TIME_CIRCLE_RADIUS);
-				mPaint.setAlpha(alpha);
-				mPaintPoint.setAlpha(alpha);
-				//绘制圆圈
-				canvas.drawCircle(mWidth / 2, mHeight / 2, radius, mPaint);
-				//绘制小圆点
-				canvas.save();
-				canvas.translate(mWidth / 2, mHeight / 2);
-				canvas.rotate(item.getPointAngle(curTime));
-				canvas.drawCircle(radius, 0, item.pointRadius, mPaintPoint);
-				canvas.restore();
-			} else {
+				if (! isPlaying && radius < mCenterRadius) {
+					item.buildTime = 0;
+				} else {
+					int alpha = 255 - (int) (255f * (curTime - item.buildTime) / TIME_CIRCLE_RADIUS);
+					mPaint.setAlpha(alpha);
+					mPaintPoint.setAlpha(alpha);
+					//绘制圆圈
+					canvas.drawCircle(mWidth / 2, mHeight / 2, radius, mPaint);
+					//绘制小圆点
+					canvas.save();
+					canvas.translate(mWidth / 2, mHeight / 2);
+					canvas.rotate(item.getPointAngle(curTime));
+					canvas.drawCircle(radius, 0, item.pointRadius, mPaintPoint);
+					canvas.restore();
+				}
+			} else if (isPlaying) {
 				item.reset();
 			}
 		}
@@ -173,7 +194,11 @@ public class MusicAnimView extends View {
 	}
 
 	public void updateState(boolean isPlaying) {
-
+		this.isPlaying = isPlaying;
+		if (isPlaying) {
+			centerAnimTime = lastResetTime = System.currentTimeMillis();
+		}
+		postInvalidate();
 	}
 
 	public void toNext(int bitmapId) {
