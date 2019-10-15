@@ -2,6 +2,7 @@ package com.lyq.mytimer.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -16,7 +17,7 @@ public class ShadowActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shadow);
 
-		TextView tv = findViewById(R.id.tv_shadow);
+		final TextView tv = findViewById(R.id.tv_shadow);
 		final ShadowDrawable drawable = new ShadowDrawable(tv);
 		drawable.setCorner(100,60,60,100);
 		tv.setBackground(drawable);
@@ -25,7 +26,10 @@ public class ShadowActivity extends BaseActivity {
 		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				drawable.setRadius(seekBar.getProgress());
+				ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) tv.getLayoutParams();
+				params.height = progress;
+				tv.setMaxHeight(progress);
+				tv.setLayoutParams(params);
 			}
 
 			@Override

@@ -101,14 +101,12 @@ public class ShadowDrawable extends Drawable {
 
 	@Override
 	public void draw(@NonNull Canvas canvas) {
-		if (! isInited) {
-			Rect rect = getBounds();
-			width = rect.width();
-			height = rect.height();
-			isInited = true;
-		}
+		Rect rect = getBounds();
+		width = rect.width();
+		height = rect.height();
 		mPaint.setShadowLayer(radius, x, y, Color.BLACK);
 
+		path.reset();
 		if (type == 0) {
 			path.moveTo(pLeft + cornerLeftTop, pTop);
 			path.lineTo(width - pRight - cornerRightTop, pTop);
