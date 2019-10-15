@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.lyq.mytimer.view.CircleImageView
+        android:id="@+id/image_scene_start_two"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_mingguo_two"/>
+
+    <com.lyq.mytimer.view.CircleImageView
+        android:id="@+id/image_scene_start_one"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_mingguo_one"/>
+
+    <com.lyq.mytimer.view.CircleImageView
+        android:id="@+id/image_scene_start_four"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="8dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_mingguo_four"/>
+
+    <com.lyq.mytimer.view.CircleImageView
+        android:id="@+id/image_scene_start_three"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_mingguo_three"/>
+
+</RelativeLayout>

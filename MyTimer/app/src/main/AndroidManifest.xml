@@ -78,6 +78,8 @@
         <activity android:name=".ui.ControlActivity"/>
         <activity android:name=".ui.TimeActivity"/>
         <activity android:name=".ui.ShadowActivity"/>
+
+        <activity android:name=".ui.SceneChangeBoundsActivity"/>
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import com.lyq.mytimer.ui.ControlActivity;
 import com.lyq.mytimer.ui.DebutActivity;
 import com.lyq.mytimer.ui.MusicAnimActivity;
 import com.lyq.mytimer.ui.Rotate3dAnimationActivity;
+import com.lyq.mytimer.ui.SceneChangeBoundsActivity;
 import com.lyq.mytimer.ui.ShadowActivity;
 import com.lyq.mytimer.ui.TimeActivity;
 import com.lyq.mytimer.view.MyTimeView;
@@ -51,6 +52,7 @@ public class MainActivity extends BaseActivity {
 		mData.add(new ModuleInfo(ControlActivity.class, "控制按钮", "不规则区域点击事件"));
 		mData.add(new ModuleInfo(ShadowActivity.class, "阴影", "阴影Drawable"));
 		mData.add(new ModuleInfo(TCPClientActivity.class, "TCP", "IPC-socket"));
+		mData.add(new ModuleInfo(SceneChangeBoundsActivity.class, "TransitionManager", "change bounds"));
 
 		mAdapter.notifyDataSetChanged();
 	}
