@@ -86,6 +86,7 @@
         <activity android:name=".ui.SceneChangeBoundsActivity"/>
         <activity android:name=".ui.WebActivity"/>
         <activity android:name=".ui.WebX5Activity"/>
+        <activity android:name=".ui.VectorActivity"/>
     </application>
 
 </manifest>

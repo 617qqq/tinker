@@ -19,6 +19,7 @@ import com.lyq.mytimer.ui.Rotate3dAnimationActivity;
 import com.lyq.mytimer.ui.SceneChangeBoundsActivity;
 import com.lyq.mytimer.ui.ShadowActivity;
 import com.lyq.mytimer.ui.TimeActivity;
+import com.lyq.mytimer.ui.VectorActivity;
 import com.lyq.mytimer.ui.WebActivity;
 import com.lyq.mytimer.ui.WebX5Activity;
 import com.lyq.mytimer.view.MyTimeView;
@@ -59,6 +60,8 @@ public class MainActivity extends BaseActivity {
 
 		mData.add(new ModuleInfo(WebActivity.class, "WebActivity", "WebActivity"));
 		mData.add(new ModuleInfo(WebX5Activity.class, "WebX5Activity", "WebX5Activity"));
+
+		mData.add(new ModuleInfo(VectorActivity.class, "Vector动画", "路径动画"));
 
 		mAdapter.notifyDataSetChanged();
 	}
