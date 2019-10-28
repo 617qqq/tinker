@@ -19,6 +19,8 @@ import com.lyq.mytimer.ui.Rotate3dAnimationActivity;
 import com.lyq.mytimer.ui.SceneChangeBoundsActivity;
 import com.lyq.mytimer.ui.ShadowActivity;
 import com.lyq.mytimer.ui.TimeActivity;
+import com.lyq.mytimer.ui.WebActivity;
+import com.lyq.mytimer.ui.WebX5Activity;
 import com.lyq.mytimer.view.MyTimeView;
 
 import java.util.ArrayList;
@@ -53,6 +55,10 @@ public class MainActivity extends BaseActivity {
 		mData.add(new ModuleInfo(ShadowActivity.class, "阴影", "阴影Drawable"));
 		mData.add(new ModuleInfo(TCPClientActivity.class, "TCP", "IPC-socket"));
 		mData.add(new ModuleInfo(SceneChangeBoundsActivity.class, "TransitionManager", "change bounds"));
+
+
+		mData.add(new ModuleInfo(WebActivity.class, "WebActivity", "WebActivity"));
+		mData.add(new ModuleInfo(WebX5Activity.class, "WebX5Activity", "WebX5Activity"));
 
 		mAdapter.notifyDataSetChanged();
 	}
