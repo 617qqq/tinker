@@ -22,7 +22,8 @@ import java.util.ArrayList;
 
 public class AttrTableView extends View {
 
-	private int SIZE_ADAPTER = 5;
+	private int ATTR_SIZE = 5;
+	private int FRAME_SIZE = 5;
 
 	private float mWidth, mHeight;
 	private int mRadius;
@@ -32,9 +33,9 @@ public class AttrTableView extends View {
 	private Paint mPaintValue = new Paint();
 	private Path mOutBorderPath = new Path();
 	private Path mValuePath = new Path();
-	private int[] mValueRadius = new int[SIZE_ADAPTER];
-	private Point[][] points = new Point[5][SIZE_ADAPTER];
-	private Point[] pointValue = new Point[SIZE_ADAPTER];
+	private int[] mValueRadius = new int[ATTR_SIZE];
+	private Point[][] points = new Point[FRAME_SIZE][ATTR_SIZE];
+	private Point[] pointValue = new Point[ATTR_SIZE];
 	//不规则数据图形动画
 	private ValueAnimator animator;
 	private float mAnimatorOffset = 1f;
@@ -46,8 +47,6 @@ public class AttrTableView extends View {
 	private RectF initRectF;
 	private Shader initGradient;
 
-	private double SIN72, COS72, SIN36, COS36;
-	private ArrayList<Integer> colors = new ArrayList<>();
 	private int cFrame = Color.parseColor("#44FFFFFF");
 	private int cValue = Color.parseColor("#4400E5EE");
 	private int cValueLine = Color.parseColor("#00e4ee");
@@ -92,14 +91,9 @@ public class AttrTableView extends View {
 	}
 
 	private void init() {
+
+
 		mPaintBackGround.setAntiAlias(true);
-		SIN72 = Math.sin(72 * Math.PI / 180);
-		COS72 = Math.cos(72 * Math.PI / 180);
-		SIN36 = Math.sin(36 * Math.PI / 180);
-		COS36 = Math.cos(36 * Math.PI / 180);
-
-		colors.add(Color.parseColor("#54FF9F"));
-		colors.add(Color.parseColor("#4EEE94"));
 
 		mValue.add(25f);
 		mValue.add(25f);
@@ -107,7 +101,7 @@ public class AttrTableView extends View {
 		mValue.add(25f);
 		mValue.add(25f);
 
-		for (int i = 0; i < SIZE_ADAPTER; i++) {
+		for (int i = 0; i < ATTR_SIZE; i++) {
 			for (int j = 0; j < points[i].length; j++) {
 				points[i][j] = new Point(0, 0);
 			}
@@ -134,7 +128,7 @@ public class AttrTableView extends View {
 		mValue.clear();
 		mValue.addAll(data);
 		mGrade = GRADE_0;
-		for (int i = 0; i < SIZE_ADAPTER; i++) {
+		for (int i = 0; i < ATTR_SIZE; i++) {
 			int subIndex = getValueSubIndex(i, mValue.get(i), 1);
 			setGrade(subIndex);
 		}
@@ -207,25 +201,25 @@ public class AttrTableView extends View {
 				initRectF = new RectF(centerX - mRadius, centerY - mRadius
 						, centerX + mRadius, centerY + mRadius);
 			}
-			canvas.drawArc(initRectF, -90, initAnimatorOffset, true, initPaint);
+			canvas.drawArc(initRectF, - 90, initAnimatorOffset, true, initPaint);
 		} else {
 			drawBackGround(canvas);
 			drawLabel(canvas, centerX, centerY);
 			drawFrame(canvas, centerX, centerY);
-			drawValue(canvas, centerX, centerY);
+			//drawValue(canvas, centerX, centerY);
 		}
 	}
 
 	private void drawValue(Canvas canvas, int centerX, int centerY) {
 		mGrade = GRADE_0;
-		for (int i = 0; i < SIZE_ADAPTER; i++) {
+		for (int i = 0; i < ATTR_SIZE; i++) {
 			int subIndex = getValueSubIndex(i, mValue.get(i), 1);
 			setGrade(subIndex);
 			setValueRadius(i, subIndex);
 		}
 		initValuePoint(centerX, centerY);
 		mValuePath.reset();
-		for (int i = 0; i < SIZE_ADAPTER; i++) {
+		for (int i = 0; i < ATTR_SIZE; i++) {
 			if (i == 0) {
 				mValuePath.moveTo(pointValue[0].x, pointValue[0].y);
 			} else {
@@ -256,7 +250,7 @@ public class AttrTableView extends View {
 		return isLine ? cValueLine : cValue;
 	}
 
-	private void setValueRadius(int i, @IntRange(from = 1, to = 5) int subIndex) {
+	private void setValueRadius(int i, @IntRange (from = 1) int subIndex) {
 		if (subIndex == 0) {
 			mValueRadius[i] = 0;
 		}
@@ -283,7 +277,7 @@ public class AttrTableView extends View {
 		mGrade = GRADE_0;
 	}
 
-	@IntRange(from = 1, to = 5)
+	@IntRange (from = 1)
 	public int getValueSubIndex(int valueIndex, float value, int subIndex) {
 		if (value < VALUE[valueIndex][subIndex]) {
 			return subIndex;
@@ -309,13 +303,13 @@ public class AttrTableView extends View {
 	}
 
 	private void drawFrame(Canvas canvas, int centerX, int centerY) {
-		for (int i = 0; i < SIZE_ADAPTER; i++) {
+		for (int i = 0; i < ATTR_SIZE; i++) {
 			canvas.drawLine(centerX, centerY, points[4][i].x, points[4][i].y, mPaintFrame);
 		}
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < FRAME_SIZE; i++) {
 			mOutBorderPath.moveTo(points[i][0].x, points[i][0].y);
-			for (int j = 1; j < SIZE_ADAPTER; j++) {
+			for (int j = 1; j < ATTR_SIZE; j++) {
 				mOutBorderPath.lineTo(points[i][j].x, points[i][j].y);
 			}
 			mOutBorderPath.close();
@@ -326,7 +320,7 @@ public class AttrTableView extends View {
 	private void drawBackGround(Canvas canvas) {
 		mOutBorderPath.reset();
 		mOutBorderPath.moveTo(points[4][0].x, points[4][0].y);
-		for (int i = 1; i < SIZE_ADAPTER; i++) {
+		for (int i = 1; i < ATTR_SIZE; i++) {
 			mOutBorderPath.lineTo(points[4][i].x, points[4][i].y);
 		}
 		mOutBorderPath.close();
@@ -334,24 +328,27 @@ public class AttrTableView extends View {
 	}
 
 	private void initPoint(int centerX, int centerY) {
-		for (int i = 0; i < SIZE_ADAPTER; i++) {
-			initPoint(i, centerX, centerY, (int) (mRadius * (0.2 + 0.2 * i)));
+		for (int i = 0; i < ATTR_SIZE; i++) {
+			initPoint(points[i], centerX, centerY, (int) (mRadius * (0.2 + 0.2 * i)));
 		}
 	}
 
-	private void initPoint(int index, int centerX, int centerY, int radius) {
-		points[index][0].set(centerX, centerY - radius);
-		points[index][1].set((int) (centerX + radius * SIN72), (int) (centerY - radius * COS72));
-		points[index][2].set((int) (centerX + radius * SIN36), (int) (centerY + radius * COS36));
-		points[index][3].set((int) (centerX - radius * SIN36), (int) (centerY + radius * COS36));
-		points[index][4].set((int) (centerX - radius * SIN72), (int) (centerY - radius * COS72));
+	private void initPoint(Point[] pointList, int centerX, int centerY, int radius) {
+		for (int i = 0; i < ATTR_SIZE; i++) {
+			int agree = 360 / ATTR_SIZE * i;
+			double x = centerX + radius * Math.sin(agree * Math.PI / 180);
+			double y = centerY - radius * Math.cos(agree * Math.PI / 180);
+			pointList[i].set((int) x, (int) y);
+		}
 	}
 
 	private void initValuePoint(int centerX, int centerY) {
-		pointValue[0].set(centerX, centerY - (int) (mValueRadius[0] * mAnimatorOffset));
-		pointValue[1].set((int) (centerX + mValueRadius[1] * mAnimatorOffset * SIN72), (int) (centerY - mValueRadius[1] * mAnimatorOffset * COS72));
-		pointValue[2].set((int) (centerX + mValueRadius[2] * mAnimatorOffset * SIN36), (int) (centerY + mValueRadius[2] * mAnimatorOffset * COS36));
-		pointValue[3].set((int) (centerX - mValueRadius[3] * mAnimatorOffset * SIN36), (int) (centerY + mValueRadius[3] * mAnimatorOffset * COS36));
-		pointValue[4].set((int) (centerX - mValueRadius[4] * mAnimatorOffset * SIN72), (int) (centerY - mValueRadius[4] * mAnimatorOffset * COS72));
+		for (int i = 0; i < ATTR_SIZE; i++) {
+			int agree = 360 / ATTR_SIZE * i;
+			double radius = mValueRadius[i] * mAnimatorOffset;
+			double x = centerX + radius * Math.sin(agree * Math.PI / 180);
+			double y = centerY - radius * Math.cos(agree * Math.PI / 180);
+			pointValue[i].set((int) x, (int) y);
+		}
 	}
 }
