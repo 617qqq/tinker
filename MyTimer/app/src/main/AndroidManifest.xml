@@ -87,6 +87,7 @@
         <activity android:name=".ui.WebActivity"/>
         <activity android:name=".ui.WebX5Activity"/>
         <activity android:name=".ui.VectorActivity"/>
+        <activity android:name=".ui.RvAnimActivity"/>
     </application>
 
 </manifest>

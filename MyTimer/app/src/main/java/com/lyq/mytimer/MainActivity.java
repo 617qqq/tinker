@@ -16,6 +16,7 @@ import com.lyq.mytimer.ui.ControlActivity;
 import com.lyq.mytimer.ui.DebutActivity;
 import com.lyq.mytimer.ui.MusicAnimActivity;
 import com.lyq.mytimer.ui.Rotate3dAnimationActivity;
+import com.lyq.mytimer.ui.RvAnimActivity;
 import com.lyq.mytimer.ui.SceneChangeBoundsActivity;
 import com.lyq.mytimer.ui.ShadowActivity;
 import com.lyq.mytimer.ui.TimeActivity;
@@ -62,6 +63,7 @@ public class MainActivity extends BaseActivity {
 		mData.add(new ModuleInfo(WebX5Activity.class, "WebX5Activity", "WebX5Activity"));
 
 		mData.add(new ModuleInfo(VectorActivity.class, "Vector动画", "路径动画"));
+		mData.add(new ModuleInfo(RvAnimActivity.class, "RecyclerView的选中动画", "RecyclerView的选中动画"));
 
 		mAdapter.notifyDataSetChanged();
 	}
