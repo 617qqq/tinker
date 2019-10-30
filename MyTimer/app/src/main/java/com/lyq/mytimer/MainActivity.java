@@ -1,16 +1,15 @@
 package com.lyq.mytimer;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.lyq.mytimer.adapter.MainAdapter;
 import com.lyq.mytimer.adapter.OnListClickListener;
 import com.lyq.mytimer.base.BaseActivity;
 import com.lyq.mytimer.info.ModuleInfo;
 import com.lyq.mytimer.ipc.socket.TCPClientActivity;
-import com.lyq.mytimer.resume.MyResumeActivity;
 import com.lyq.mytimer.ui.AttrTableViewActivity;
 import com.lyq.mytimer.ui.ControlActivity;
 import com.lyq.mytimer.ui.DebutActivity;
@@ -23,14 +22,8 @@ import com.lyq.mytimer.ui.TimeActivity;
 import com.lyq.mytimer.ui.VectorActivity;
 import com.lyq.mytimer.ui.WebActivity;
 import com.lyq.mytimer.ui.WebX5Activity;
-import com.lyq.mytimer.view.MyTimeView;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity {
 

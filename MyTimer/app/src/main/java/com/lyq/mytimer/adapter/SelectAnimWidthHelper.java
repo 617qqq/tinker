@@ -1,8 +1,8 @@
 package com.lyq.mytimer.adapter;
 
 import android.animation.ValueAnimator;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.widget.TextView;
 
 public class SelectAnimWidthHelper extends SelectAnimHelper<TextView, Integer> {

@@ -1,7 +1,7 @@
 package com.lyq.mytimer.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.lyq.mytimer.R;
 import com.lyq.mytimer.base.BaseActivity;

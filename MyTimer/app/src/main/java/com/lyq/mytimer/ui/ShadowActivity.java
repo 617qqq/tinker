@@ -1,8 +1,8 @@
 package com.lyq.mytimer.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 

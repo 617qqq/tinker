@@ -1,6 +1,6 @@
 package com.lyq.mytimer.adapter;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * RecyclerView Adapter 的点击回调
