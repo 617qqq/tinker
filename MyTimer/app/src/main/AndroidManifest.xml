@@ -31,11 +31,12 @@
         <activity android:name=".ui.DpiActivity">
         </activity>
 
-        <activity android:name=".ui.AttrTableViewActivity"></activity>
+        <activity android:name=".ui.AttrTableViewActivity"/>
+        <activity android:name=".ui.AttrTableView2Activity"/>
 
         <activity android:name=".resume.MyResumeActivity" />
 
-        <activity android:name=".ipc.file_share.FileShareActivityMain"></activity>
+        <activity android:name=".ipc.file_share.FileShareActivityMain"/>
 
         <activity
             android:name=".ipc.file_share.FileShareActivityClient"

@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.lyq.attr_graph.AttrGraphView;
+
 import java.util.ArrayList;
 
 public class AttrTableView extends View {

@@ -10,6 +10,7 @@ import com.lyq.mytimer.adapter.OnListClickListener;
 import com.lyq.mytimer.base.BaseActivity;
 import com.lyq.mytimer.info.ModuleInfo;
 import com.lyq.mytimer.ipc.socket.TCPClientActivity;
+import com.lyq.mytimer.ui.AttrTableView2Activity;
 import com.lyq.mytimer.ui.AttrTableViewActivity;
 import com.lyq.mytimer.ui.ControlActivity;
 import com.lyq.mytimer.ui.DebutActivity;
@@ -43,6 +44,7 @@ public class MainActivity extends BaseActivity {
 	private void setData() {
 		mData.add(new ModuleInfo(TimeActivity.class, "时间罗盘", "罗盘样式的时钟"));
 		mData.add(new ModuleInfo(AttrTableViewActivity.class, "属性图", "5维属性图"));
+		mData.add(new ModuleInfo(AttrTableView2Activity.class, "属性图", "5维属性图"));
 		mData.add(new ModuleInfo(DebutActivity.class, "登场动画", "背景灯旋转动画"));
 		mData.add(new ModuleInfo(MusicAnimActivity.class, "音乐动画", "网易云孤独星球动画"));
 		mData.add(new ModuleInfo(Rotate3dAnimationActivity.class, "3D动画", "翻盘动画效果"));
