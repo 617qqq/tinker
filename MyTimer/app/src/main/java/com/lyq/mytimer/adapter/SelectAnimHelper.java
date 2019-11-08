@@ -60,8 +60,11 @@ public abstract class SelectAnimHelper<T extends View, H> {
 		addUnSelectedAnim(last);
 	}
 
+	/**
+	 * 如果tag通过{@link View#setTag(int, Object)}设置，重写改方法
+	 */
 	@Nullable
-	T getView(int targetIndex) {
+	protected T getView(int targetIndex) {
 		for (T view : viewList) {
 			int position = (int) view.getTag();
 			if (position == targetIndex) {
