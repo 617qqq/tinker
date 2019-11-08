@@ -47,7 +47,7 @@ public class Rotate3dAnimation extends Animation {
 		} else {
 			camera.translate(0f, 0f, mDepthZ * (1f - interpolatedTime));
 		}
-		camera.rotateY(degrees);
+		camera.rotateX(degrees);
 		camera.getMatrix(matrix);
 		camera.restore();
 
