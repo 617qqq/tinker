@@ -1,6 +1,11 @@
 package com.lyq.mytimer;
 
+import android.app.WallpaperManager;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,11 +23,14 @@ import com.lyq.mytimer.ui.MusicAnimActivity;
 import com.lyq.mytimer.ui.Rotate3dAnimationActivity;
 import com.lyq.mytimer.ui.RvAnimActivity;
 import com.lyq.mytimer.ui.SceneChangeBoundsActivity;
+import com.lyq.mytimer.ui.SettingActivity;
 import com.lyq.mytimer.ui.ShadowActivity;
 import com.lyq.mytimer.ui.TimeActivity;
+import com.lyq.mytimer.ui.TransparentActivity;
 import com.lyq.mytimer.ui.VectorActivity;
 import com.lyq.mytimer.ui.WebActivity;
 import com.lyq.mytimer.ui.WebX5Activity;
+import com.lyq.mytimer.utils.NormalWallpaperService;
 
 import java.util.ArrayList;
 
@@ -59,6 +67,8 @@ public class MainActivity extends BaseActivity {
 
 		mData.add(new ModuleInfo(VectorActivity.class, "Vector动画", "路径动画"));
 		mData.add(new ModuleInfo(RvAnimActivity.class, "RecyclerView的选中动画", "RecyclerView的选中动画"));
+		mData.add(new ModuleInfo(SettingActivity.class, "壁纸设置", "壁纸设置"));
+		mData.add(new ModuleInfo(TransparentActivity.class, "透明", "透明"));
 
 		mAdapter.notifyDataSetChanged();
 	}
@@ -78,4 +88,11 @@ public class MainActivity extends BaseActivity {
 	}
 
 
+	public void onClickStartService(View view) {
+		Intent intent = new Intent(
+				WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
+		intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
+				new ComponentName(this, NormalWallpaperService.class));
+		startActivity(intent);
+	}
 }
