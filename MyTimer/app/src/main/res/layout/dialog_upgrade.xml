@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        tools:background="#000">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:tag="beta_upgrade_banner"
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_style"
+            android:tag="beta_title"
+            android:textColor="#FFF"
+            app:layout_constraintBottom_toTopOf="@id/tv_upgrade_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/img" />
+
+        <TextView
+            android:id="@+id/tv_upgrade_info"
+            style="@style/text_style"
+            android:tag="beta_upgrade_info"
+            android:textColor="#FFF"
+            app:layout_constraintBottom_toBottomOf="@id/img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+        <TextView
+            android:id="@+id/tv_attr"
+            style="@style/text_style"
+            android:tag="beta_upgrade_feature"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img" />
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            style="@style/text_style"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:tag="beta_confirm_button"
+            android:text="马上更新"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_cancel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            style="@style/text_style"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:tag="beta_cancel_button"
+            android:text="杀个程序员几天"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_confirm" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

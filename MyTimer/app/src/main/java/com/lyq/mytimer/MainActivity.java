@@ -29,6 +29,7 @@ import com.lyq.mytimer.ui.SettingActivity;
 import com.lyq.mytimer.ui.ShadowActivity;
 import com.lyq.mytimer.ui.TimeActivity;
 import com.lyq.mytimer.ui.TransparentActivity;
+import com.lyq.mytimer.ui.UpgradeActivity;
 import com.lyq.mytimer.ui.VectorActivity;
 import com.lyq.mytimer.ui.WebActivity;
 import com.lyq.mytimer.ui.WebX5Activity;
@@ -73,6 +74,7 @@ public class MainActivity extends BaseActivity {
 		mData.add(new ModuleInfo(TransparentActivity.class, "透明", "透明"));
 		mData.add(new ModuleInfo(KnobActivity.class, "透明", "透明"));
 		mData.add(new ModuleInfo(FontStyleActivity.class, "字体", "系统字体及字体文件"));
+		mData.add(new ModuleInfo(UpgradeActivity.class, "检测更新", "Bugly"));
 
 		mAdapter.notifyDataSetChanged();
 	}
