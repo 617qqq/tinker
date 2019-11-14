@@ -112,6 +112,9 @@
 
         <activity android:name=".ui.TransparentActivity"
             android:theme="@style/Transparent"/>
+
+        <activity android:name=".ui.KnobActivity"/>
+        <activity android:name=".ui.FontStyleActivity" />
     </application>
 
 </manifest>

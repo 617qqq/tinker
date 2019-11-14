@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_style_hint"
+            android:text="默认：" />
+
+        <TextView style="@style/text_style" />
+
+
+        <TextView
+            style="@style/text_style_hint"
+            android:text="bold：" />
+
+        <TextView
+            style="@style/text_style"
+            android:textStyle="bold" />
+
+
+        <TextView
+            style="@style/text_style_hint"
+            android:text="italic：" />
+
+        <TextView
+            style="@style/text_style"
+            android:textStyle="italic" />
+
+        <TextView
+            style="@style/text_style_hint"
+            android:text="monospace：" />
+
+        <TextView
+            style="@style/text_style"
+            android:typeface="monospace" />
+
+        <TextView
+            style="@style/text_style_hint"
+            android:text="sans：" />
+
+        <TextView
+            style="@style/text_style"
+            android:typeface="sans" />
+
+        <TextView
+            style="@style/text_style_hint"
+            android:text="serif：" />
+
+        <TextView
+            style="@style/text_style"
+            android:typeface="serif" />
+
+        <TextView
+            style="@style/text_style_hint"
+            android:text="symbol：" />
+
+        <TextView
+            style="@style/text_style"
+            android:fontFamily="@font/symbol" />
+
+        <TextView
+            style="@style/text_style_hint"
+            android:text="sfns_display_condensed_medium：" />
+
+        <TextView
+            style="@style/text_style"
+            android:fontFamily="@font/sfns_display_condensed_medium" />
+
+        <TextView
+            style="@style/text_style_hint"
+            android:text="毛笔：" />
+
+        <TextView
+            style="@style/text_style"
+            android:fontFamily="@font/chinese_brush" />
+
+        <TextView
+            style="@style/text_style_hint"
+            android:text="sfns_display_condensed_medium：" />
+
+        <TextView
+            style="@style/text_style"
+            android:fontFamily="@font/sfns_display_condensed_medium" />
+
+    </LinearLayout>
+
+</ScrollView>

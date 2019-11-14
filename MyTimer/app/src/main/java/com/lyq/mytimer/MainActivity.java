@@ -19,6 +19,8 @@ import com.lyq.mytimer.ui.AttrTableView2Activity;
 import com.lyq.mytimer.ui.AttrTableViewActivity;
 import com.lyq.mytimer.ui.ControlActivity;
 import com.lyq.mytimer.ui.DebutActivity;
+import com.lyq.mytimer.ui.FontStyleActivity;
+import com.lyq.mytimer.ui.KnobActivity;
 import com.lyq.mytimer.ui.MusicAnimActivity;
 import com.lyq.mytimer.ui.Rotate3dAnimationActivity;
 import com.lyq.mytimer.ui.RvAnimActivity;
@@ -69,6 +71,8 @@ public class MainActivity extends BaseActivity {
 		mData.add(new ModuleInfo(RvAnimActivity.class, "RecyclerView的选中动画", "RecyclerView的选中动画"));
 		mData.add(new ModuleInfo(SettingActivity.class, "壁纸设置", "壁纸设置"));
 		mData.add(new ModuleInfo(TransparentActivity.class, "透明", "透明"));
+		mData.add(new ModuleInfo(KnobActivity.class, "透明", "透明"));
+		mData.add(new ModuleInfo(FontStyleActivity.class, "字体", "系统字体及字体文件"));
 
 		mAdapter.notifyDataSetChanged();
 	}
