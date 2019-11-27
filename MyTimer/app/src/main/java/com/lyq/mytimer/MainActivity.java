@@ -20,6 +20,7 @@ import com.lyq.mytimer.ui.AttrTableViewActivity;
 import com.lyq.mytimer.ui.ControlActivity;
 import com.lyq.mytimer.ui.DebutActivity;
 import com.lyq.mytimer.ui.FontStyleActivity;
+import com.lyq.mytimer.ui.GoToFileManagerActivity;
 import com.lyq.mytimer.ui.KnobActivity;
 import com.lyq.mytimer.ui.MusicAnimActivity;
 import com.lyq.mytimer.ui.Rotate3dAnimationActivity;
@@ -75,6 +76,7 @@ public class MainActivity extends BaseActivity {
 		mData.add(new ModuleInfo(KnobActivity.class, "透明", "透明"));
 		mData.add(new ModuleInfo(FontStyleActivity.class, "字体", "系统字体及字体文件"));
 		mData.add(new ModuleInfo(UpgradeActivity.class, "检测更新", "Bugly"));
+		mData.add(new ModuleInfo(GoToFileManagerActivity.class, "文件管理", "文件管理"));
 
 		mAdapter.notifyDataSetChanged();
 	}
