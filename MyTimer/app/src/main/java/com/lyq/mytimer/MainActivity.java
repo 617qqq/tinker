@@ -17,6 +17,7 @@ import com.lyq.mytimer.info.ModuleInfo;
 import com.lyq.mytimer.ipc.socket.TCPClientActivity;
 import com.lyq.mytimer.ui.AttrTableView2Activity;
 import com.lyq.mytimer.ui.AttrTableViewActivity;
+import com.lyq.mytimer.ui.ButterflyActivity;
 import com.lyq.mytimer.ui.ControlActivity;
 import com.lyq.mytimer.ui.DebutActivity;
 import com.lyq.mytimer.ui.FontStyleActivity;
@@ -54,6 +55,7 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void setData() {
+		mData.add(new ModuleInfo(ButterflyActivity.class, "pathMeasure", "路径"));
 		mData.add(new ModuleInfo(TimeActivity.class, "时间罗盘", "罗盘样式的时钟"));
 		mData.add(new ModuleInfo(AttrTableViewActivity.class, "属性图", "5维属性图"));
 		mData.add(new ModuleInfo(AttrTableView2Activity.class, "属性图", "5维属性图"));
