@@ -1,9 +1,11 @@
 package com.lyq.mytimer.view;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
@@ -77,8 +79,6 @@ public class ButterflyView extends View {
 		pathMeasure.setPath(pathTrack, false);
 		trackLength = pathMeasure.getLength();
 
-		//path.addRect(0, 0, 50, 50, Path.Direction.CW);
-
 		butterflyShader = new RadialGradient(200, 200, 150
 				, new int[]{
 				Color.parseColor("#f5d4f8")
@@ -89,9 +89,7 @@ public class ButterflyView extends View {
 				, new float[]{0, 0.25f, 0.5f, 0.75f, 1f}
 				, Shader.TileMode.CLAMP
 		);
-//		butterflyShader = new RadialGradient(200, 200, 150
-//				, Color.parseColor(color[0]), Color.parseColor(color[1]), Shader.TileMode.CLAMP
-//		);
+
 		paintButterfly = new Paint();
 		paintButterfly.setAntiAlias(true);
 		paintButterfly.setShader(butterflyShader);
@@ -107,20 +105,22 @@ public class ButterflyView extends View {
 		paintTexture.setStrokeWidth(1);
 		paintTexture.setStyle(Paint.Style.STROKE);
 
+		ValueAnimator animator = ValueAnimator.ofFloat(50f, 75f);
+		animator.setDuration(2000);
+		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation) {
+				degreesOffset = (float) animation.getAnimatedValue();
+				postInvalidate();
+			}
+		});
+		animator.setRepeatMode(ValueAnimator.REVERSE);
+		animator.setRepeatCount(- 1);
+		animator.start();
 
-//		ValueAnimator animator = ValueAnimator.ofFloat(0, trackLength);
-//		animator.setRepeatCount(- 1);
-//		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//			@Override
-//			public void onAnimationUpdate(ValueAnimator animation) {
-//				distance = (float) animation.getAnimatedValue();
-//				Log.e("617233", "onAnimationUpdate: " + distance);
-//				postInvalidate();
-//			}
-//		});
-//		animator.setDuration(5000);
-//		animator.start();
-
+		pointPaint.setStyle(Paint.Style.FILL);
+		pointPaint.setColor(Color.RED);
+		pointPaint.setStrokeWidth(20);
 	}
 
 	@Override
@@ -133,6 +133,18 @@ public class ButterflyView extends View {
 		//drawFrame(canvas);
 		//canvas.drawColor(Color.BLACK);
 		drawButterfly(canvas);
+//		canvas.drawPoint(width / 2, height / 2, paint);
+//		canvas.drawPoint(0,0, paint);
+//
+//		canvas.save();
+//		canvas.scale(0.5f, 0.5f, width / 2, height / 2);
+//		canvas.translate(100, 100);
+//
+//		canvas.drawPoint(width / 2 - 100, height / 2 - 100, pointPaint);
+//		canvas.drawPoint(-width/2 - 100, -height/2 - 100, pointPaint);
+//		canvas.rotate(45);
+//		canvas.drawRect(width/2 - 200 , height / 2 - 200, width/2, height/2, paint);
+//		canvas.restore();
 	}
 
 	private void drawFrame(Canvas canvas) {
@@ -143,25 +155,57 @@ public class ButterflyView extends View {
 		canvas.drawLine(50, 350, 400, 0, paint);
 	}
 
+	private Matrix matrix = new Matrix();
+	private Camera camera = new Camera();
+	private float degreesOffset = 1f;
+
 	private void drawButterfly(Canvas canvas) {
+		drawButterflyHalf(canvas, true);
+		drawButterflyHalf(canvas, false);
+	}
+
+	private Paint pointPaint = new Paint();
+
+	private void drawButterflyHalf(Canvas canvas, boolean isLeft) {
 		canvas.save();
+		canvas.save();
+		camera.save();
+		matrix.reset();
 
-		canvas.drawPath(path, paintButterfly);
+		camera.rotate(-45, getDegrees(isLeft), -20);
+		camera.getMatrix(matrix);
+		camera.restore();
 
+		matrix.preTranslate(- 200, - 200);
+		matrix.postTranslate(200, 200);
+		canvas.concat(matrix);
 
-		for (int i = 0; i < pointXs.length; i++) {
-			for (int sub = 1; sub < 4; sub++) {
-				canvas.drawLine(pointXs[i][0], pointYs[i][0], pointXs[i][sub], pointYs[i][sub], paintTexture);
-			}
+		path.reset();
+		int start = isLeft ? 0 : 4;
+		int end = isLeft ? 4 : 8;
+		for (int i = start; i < end; i++) {
+			path.moveTo(point[8 * i], point[8 * i + 1]);
+			path.lineTo(point[8 * i + 2], point[8 * i + 3]);
+			path.lineTo(point[8 * i + 4], point[8 * i + 5]);
+			path.close();
 		}
+		canvas.drawPath(path, paintButterfly);
+		for (int i = start; i < end; i++) {
+			canvas.drawLine(point[8 * i + 6], point[8 * i + 7], point[8 * i], point[8 * i + 1], paintTexture);
+			canvas.drawLine(point[8 * i + 6], point[8 * i + 7], point[8 * i + 2], point[8 * i + 3], paintTexture);
+			canvas.drawLine(point[8 * i + 6], point[8 * i + 7], point[8 * i + 4], point[8 * i + 5], paintTexture);
+		}
+		canvas.restore();
 		canvas.restore();
 	}
 
-	private float[][] pointXs = new float[8][4];
-	private float[][] pointYs = new float[8][4];
+	private float getDegrees(boolean isLeft) {
+		return (isLeft ? 1 : - 1) * degreesOffset;
+	}
+
+	private float[] point = new float[64];
 
 	private void initButterflyPath() {
-		path.reset();
 		int cx = 200;
 		float[] moveX = {cx - 5, cx - 10, cx - 10, cx - 5, cx + 5, cx + 10, cx + 10, cx + 5,};
 		float[] moveY = {cx - 10, cx - 5, cx + 5, cx + 10,};
@@ -171,24 +215,19 @@ public class ButterflyView extends View {
 		float[] agree2 = {135, 165, 220, 250,};
 
 		for (int i = 0; i < moveX.length; i++) {
-			pointXs[i][1] = moveX[i];
-			pointYs[i][1] = moveY[i % 4];
-			path.moveTo(moveX[i], moveY[i % 4]);
+			point[8 * i] = moveX[i];
+			point[8 * i + 1] = moveY[i % 4];
 
-			pointXs[i][2] = cx + getCos(line1[i % 4], agree1[i % 4], i);
-			pointYs[i][2] = cx - getSin(line1[i % 4], agree1[i % 4], i);
-			path.lineTo(pointXs[i][2], pointYs[i][2]);
+			point[8 * i + 2] = cx + getCos(line1[i % 4], agree1[i % 4], i);
+			point[8 * i + 3] = cx - getSin(line1[i % 4], agree1[i % 4], i);
 
-			pointXs[i][3] = cx + getCos(line2[i % 4], agree2[i % 4], i);
-			pointYs[i][3] = cx - getSin(line2[i % 4], agree2[i % 4], i);
-			path.lineTo(pointXs[i][3], pointYs[i][3]);
+			point[8 * i + 4] = cx + getCos(line2[i % 4], agree2[i % 4], i);
+			point[8 * i + 5] = cx - getSin(line2[i % 4], agree2[i % 4], i);
 
 			float lineTemp = (line1[i % 4] + line2[1 % 4]) / 2 - (i % 4 == 1 ? 35 : 15);
 			float agreeTemp = (agree1[i % 4] + agree2[i % 4]) / 2;
-			pointXs[i][0] = cx + getCos(lineTemp, agreeTemp, i);
-			pointYs[i][0] = cx - getSin(lineTemp, agreeTemp, i);
-
-			path.close();
+			point[8 * i + 6] = cx + getCos(lineTemp, agreeTemp, i);
+			point[8 * i + 7] = cx - getSin(lineTemp, agreeTemp, i);
 		}
 	}
 
