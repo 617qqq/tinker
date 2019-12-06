@@ -1,14 +1,45 @@
 package com.qtkj.mylibrary;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
+
 public class MathTest {
 
 	public static void main(String[] args) {
 //		testSin();
-		testMove();
+//		testMove();
 //		System.out.println(Integer.toBinaryString(Integer.MIN_VALUE));
 //		System.out.println(Integer.MIN_VALUE);
 //		System.out.println(0b10000000000000000000000000000001);
 //		System.out.println(0b11111111111111111111111111111110);
+
+//		System.out.println((0 ^ 0));
+
+//		testFloat();
+
+		System.out.println((float) Math.sqrt(Math.pow(3, 2) + Math.pow(4, 2)));
+	}
+
+	private static void testFloat() {
+		Scanner sc = new Scanner(System.in);
+		float input;
+		while (true) {
+			input = Float.parseFloat(sc.next());
+			System.out.println(testFloat(input));
+		}
+	}
+
+	private static float testFloat(float input) {
+		if (input < 0.3f) {
+			return input / 0.3f;
+		} else if (input < 0.45f) {
+			return 1 - 0.8f * (input - 0.3f) / 0.15f;
+		} else if (input < 0.6f) {
+			return 0.2f + 0.8f * (input - 0.45f) / 0.15f;
+		} else {
+			return 0;
+		}
 	}
 
 	private static void testMove() {
