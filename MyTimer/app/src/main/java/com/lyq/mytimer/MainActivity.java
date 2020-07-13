@@ -24,6 +24,7 @@ import com.lyq.mytimer.ui.DebutActivity;
 import com.lyq.mytimer.ui.FontStyleActivity;
 import com.lyq.mytimer.ui.GoToFileManagerActivity;
 import com.lyq.mytimer.ui.KnobActivity;
+import com.lyq.mytimer.ui.LottieActivity;
 import com.lyq.mytimer.ui.MusicAnimActivity;
 import com.lyq.mytimer.ui.Rotate3dAnimationActivity;
 import com.lyq.mytimer.ui.RvAnimActivity;
@@ -59,6 +60,7 @@ public class MainActivity extends BaseActivity {
 
 	private void setData() {
 		mData.add(new ModuleInfo(RecyclerAnimationActivity.class, "RecyclerAnimationActivity", "Item动画"));
+		mData.add(new ModuleInfo(LottieActivity.class, "LottieActivity", "Lottie动画"));
 		mData.add(new ModuleInfo(BackActivity.class, "BackActivity", "路径"));
 		mData.add(new ModuleInfo(ButterflyActivity.class, "pathMeasure", "路径"));
 		mData.add(new ModuleInfo(WifiTestActivity.class, "WifiTestActivity", "局域网内设备"));

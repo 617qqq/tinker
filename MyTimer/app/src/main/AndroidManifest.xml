@@ -47,6 +47,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.LottieActivity" />
         <activity android:name=".ui.BackActivity" />
         <activity android:name=".ui.DpiActivity" />
 
