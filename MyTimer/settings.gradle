@@ -1,1 +1,1 @@
-include ':app', ':mylibrary', ':attr_graph'
+include ':app', ':mylibrary', ':attr_graph', ':gradle_test'

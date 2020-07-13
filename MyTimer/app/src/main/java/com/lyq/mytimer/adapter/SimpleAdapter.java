@@ -1,10 +1,13 @@
 package com.lyq.mytimer.adapter;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.lyq.mytimer.R;
 
@@ -23,7 +26,6 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
 		mInflater = LayoutInflater.from(context);
 	}
 
-
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = mInflater.inflate(R.layout.item_simple, parent, false);
@@ -33,6 +35,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
+		holder.rootText.setText(String.valueOf(position));
 	}
 
 	public OnListClickListener onClick;
@@ -48,8 +51,11 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder
 
 	class ViewHolder extends RecyclerView.ViewHolder {
 
+		TextView rootText;
+
 		public ViewHolder(View view) {
 			super(view);
+			rootText = view.findViewById(R.id.rootText);
 		}
 	}
 }

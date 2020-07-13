@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -26,6 +28,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    configurations {
+        cleanedAnnotations
+        compile.exclude group: 'org.jetbrains', module: 'annotations'
     }
 }
 
@@ -56,6 +62,16 @@ dependencies {
     //https://github.com/pinguo-zhouwei/EasyBlur
     implementation 'com.github.pinguo-zhouwei:EasyBlur:v1.0.0'
     //https://bugly.qq.com/docs/user-guide/instruction-manual-android-upgrade/?v=20181014122344#_3
-    implementation 'com.tencent.bugly:crashreport_upgrade:1.4.2'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-    implementation 'com.tencent.bugly:nativecrashreport:3.7.1' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.4.2'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+
+    //https://github.com/airbnb/lottie-android Lottie动画
+    implementation "com.airbnb.android:lottie:3.4.1"
+}
+repositories {
+    mavenCentral()
 }
