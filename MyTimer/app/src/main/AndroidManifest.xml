@@ -104,6 +104,9 @@
         <activity android:name=".ui.ShadowActivity" />
 
         <activity android:name=".ui.SceneChangeBoundsActivity" />
+        <activity android:name=".ui.SceneRecyclerActivity" />
+        <activity android:name=".ui.MotionActivity" />
+        <activity android:name=".ui.MotionRecyclerActivity" />
         <activity android:name=".ui.WebActivity" />
         <activity android:name=".ui.WebX5Activity" />
         <activity android:name=".ui.VectorActivity" />

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,10 +26,13 @@ import com.lyq.mytimer.ui.FontStyleActivity;
 import com.lyq.mytimer.ui.GoToFileManagerActivity;
 import com.lyq.mytimer.ui.KnobActivity;
 import com.lyq.mytimer.ui.LottieActivity;
+import com.lyq.mytimer.ui.MotionActivity;
+import com.lyq.mytimer.ui.MotionRecyclerActivity;
 import com.lyq.mytimer.ui.MusicAnimActivity;
 import com.lyq.mytimer.ui.Rotate3dAnimationActivity;
 import com.lyq.mytimer.ui.RvAnimActivity;
 import com.lyq.mytimer.ui.SceneChangeBoundsActivity;
+import com.lyq.mytimer.ui.SceneRecyclerActivity;
 import com.lyq.mytimer.ui.SettingActivity;
 import com.lyq.mytimer.ui.ShadowActivity;
 import com.lyq.mytimer.ui.TimeActivity;
@@ -75,7 +79,9 @@ public class MainActivity extends BaseActivity {
 		mData.add(new ModuleInfo(ShadowActivity.class, "阴影", "阴影Drawable"));
 		mData.add(new ModuleInfo(TCPClientActivity.class, "TCP", "IPC-socket"));
 		mData.add(new ModuleInfo(SceneChangeBoundsActivity.class, "TransitionManager", "change bounds"));
-
+		mData.add(new ModuleInfo(SceneRecyclerActivity.class, "TransitionManager", "change bounds"));
+		mData.add(new ModuleInfo(MotionActivity.class, "MotionLayout", "change bounds"));
+		mData.add(new ModuleInfo(MotionRecyclerActivity.class, "MotionRecyclerActivity", "change bounds"));
 
 		mData.add(new ModuleInfo(WebActivity.class, "WebActivity", "WebActivity"));
 		mData.add(new ModuleInfo(WebX5Activity.class, "WebX5Activity", "WebX5Activity"));

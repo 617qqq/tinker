@@ -44,3 +44,4 @@ proguard/
 /buildSdk
 
 
+MyTimer/gradle/wrapper/gradle-wrapper.properties

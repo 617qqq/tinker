@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        android:id="@+id/toEnd"
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@+id/start"
+        motion:duration="500">
+        <OnClick
+            motion:clickAction="toggle"
+            motion:targetId="@+id/toggle" />
+    </Transition>
+
+<!--    <Transition-->
+<!--        android:id="@+id/toStart"-->
+<!--        motion:constraintSetEnd="@+id/start"-->
+<!--        motion:constraintSetStart="@+id/end"-->
+<!--        motion:duration="300">-->
+<!--        <OnSwipe-->
+<!--            motion:dragDirection="dragUp"-->
+<!--            motion:dragScale="50"-->
+<!--            motion:dragThreshold="60"-->
+<!--            motion:onTouchUp="autoComplete" />-->
+
+<!--    </Transition>-->
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint android:id="@+id/bg">
+            <Layout android:layout_height="300dp"
+                android:layout_width="match_parent"
+                />
+        </Constraint>
+
+        <Constraint android:id="@+id/img">
+            <Layout
+                android:layout_height="300dp"
+                motion:layout_constraintBottom_toBottomOf="@id/bg"
+                motion:layout_constraintTop_toTopOf="@id/bg" />
+        </Constraint>
+
+        <Constraint android:id="@+id/tvBg">
+            <Layout
+                android:layout_width="80dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/shape_blue_10"
+                motion:layout_constraintEnd_toEndOf="@id/img"
+                motion:layout_constraintTop_toTopOf="@id/img" />
+        </Constraint>
+
+        <Constraint android:id="@+id/tvTest">
+            <Layout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:textColor="#fff"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                motion:layout_constraintStart_toStartOf="@id/img"
+                motion:layout_constraintTop_toTopOf="@id/img" />
+        </Constraint>
+
+        <Constraint android:id="@+id/tvTest1">
+            <CustomAttribute
+                motion:attributeName="alpha"
+                motion:customFloatValue="1" />
+        </Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet
+        android:id="@+id/end"
+        motion:deriveConstraintsFrom="@id/start">
+        <Constraint android:id="@+id/bg">
+            <Layout android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                />
+        </Constraint>
+
+        <Constraint android:id="@+id/img">
+            <Layout
+                android:layout_height="500dp"
+                motion:layout_constraintBottom_toBottomOf="@id/bg"
+                motion:layout_constraintTop_toTopOf="@id/bg" />
+        </Constraint>
+
+
+        <Constraint android:id="@+id/tvBg">
+            <Layout
+                android:layout_width="80dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_blue_10"
+                motion:layout_constraintEnd_toEndOf="@id/img"
+                motion:layout_constraintTop_toTopOf="@id/img" />
+        </Constraint>
+
+        <Constraint android:id="@+id/tvTest">
+            <Layout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:textColor="#fff"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                motion:layout_constraintStart_toStartOf="@id/tvBg"
+                motion:layout_constraintTop_toTopOf="@id/tvBg" />
+        </Constraint>
+
+        <Constraint android:id="@+id/tvTest1">
+            <CustomAttribute
+                motion:attributeName="alpha"
+                motion:customFloatValue="0" />
+        </Constraint>
+    </ConstraintSet>
+
+</MotionScene>
