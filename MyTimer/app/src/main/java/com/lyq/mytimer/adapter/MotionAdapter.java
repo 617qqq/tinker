@@ -162,7 +162,7 @@ public class MotionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 							break;
 						case MotionEvent.ACTION_MOVE:
 							if (header.getCurrentState() == R.id.start && event.getY() > y) {
-								header.transitionToEnd();
+								header.transitionToStart();
 								return true;
 							} else if (header.getCurrentState() == R.id.end && event.getY() < y) {
 								header.transitionToStart();

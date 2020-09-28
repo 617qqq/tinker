@@ -14,7 +14,7 @@ android {
 
         //使用renderscript 兼容包
         renderscriptTargetApi 25
-        renderscriptSupportModeEnabled true
+        renderscriptSupportModeEnabled false
 
         //vectorDrawables
         vectorDrawables.useSupportLibrary = true

@@ -137,6 +137,8 @@
         <activity android:name=".ui.KnobActivity" />
         <activity android:name=".ui.FontStyleActivity" />
         <activity android:name=".ui.recycler.RecyclerAnimationActivity"/>
+        <activity android:name=".ui.BlurActivity"/>
+        <activity android:name=".ui.GroupActivity"/>
 
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
@@ -145,6 +147,7 @@
         <activity android:name=".ui.UpgradeActivity" />
         <activity android:name=".ui.GoToFileManagerActivity" />
         <activity android:name=".ui.WifiTestActivity" />
+        <activity android:name=".ui.AndroidShareActivity" />
 
         <provider
             android:name=".utils.upgrade.BuglyUpgradeFileProvider"

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,11 +18,13 @@ import com.lyq.mytimer.ipc.socket.TCPClientActivity;
 import com.lyq.mytimer.ui.AttrTableView2Activity;
 import com.lyq.mytimer.ui.AttrTableViewActivity;
 import com.lyq.mytimer.ui.BackActivity;
+import com.lyq.mytimer.ui.BlurActivity;
 import com.lyq.mytimer.ui.ButterflyActivity;
 import com.lyq.mytimer.ui.ControlActivity;
 import com.lyq.mytimer.ui.DebutActivity;
 import com.lyq.mytimer.ui.FontStyleActivity;
 import com.lyq.mytimer.ui.GoToFileManagerActivity;
+import com.lyq.mytimer.ui.GroupActivity;
 import com.lyq.mytimer.ui.KnobActivity;
 import com.lyq.mytimer.ui.LottieActivity;
 import com.lyq.mytimer.ui.MotionActivity;
@@ -64,6 +65,8 @@ public class MainActivity extends BaseActivity {
 
 	private void setData() {
 		mData.add(new ModuleInfo(RecyclerAnimationActivity.class, "RecyclerAnimationActivity", "Item动画"));
+		mData.add(new ModuleInfo(GroupActivity.class, "GroupActivity", "展开收起"));
+		mData.add(new ModuleInfo(BlurActivity.class, "RenderDialogFg", "高斯模糊"));
 		mData.add(new ModuleInfo(LottieActivity.class, "LottieActivity", "Lottie动画"));
 		mData.add(new ModuleInfo(BackActivity.class, "BackActivity", "路径"));
 		mData.add(new ModuleInfo(ButterflyActivity.class, "pathMeasure", "路径"));
