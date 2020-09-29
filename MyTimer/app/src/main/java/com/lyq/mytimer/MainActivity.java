@@ -15,6 +15,7 @@ import com.lyq.mytimer.adapter.OnListClickListener;
 import com.lyq.mytimer.base.BaseActivity;
 import com.lyq.mytimer.info.ModuleInfo;
 import com.lyq.mytimer.ipc.socket.TCPClientActivity;
+import com.lyq.mytimer.ui.AndroidShareActivity;
 import com.lyq.mytimer.ui.AttrTableView2Activity;
 import com.lyq.mytimer.ui.AttrTableViewActivity;
 import com.lyq.mytimer.ui.BackActivity;
@@ -65,6 +66,7 @@ public class MainActivity extends BaseActivity {
 
 	private void setData() {
 		mData.add(new ModuleInfo(RecyclerAnimationActivity.class, "RecyclerAnimationActivity", "Item动画"));
+		mData.add(new ModuleInfo(AndroidShareActivity.class, "AndroidShareActivity", "原生分享"));
 		mData.add(new ModuleInfo(GroupActivity.class, "GroupActivity", "展开收起"));
 		mData.add(new ModuleInfo(BlurActivity.class, "RenderDialogFg", "高斯模糊"));
 		mData.add(new ModuleInfo(LottieActivity.class, "LottieActivity", "Lottie动画"));
