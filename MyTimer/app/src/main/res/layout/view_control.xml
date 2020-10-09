@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="330dp"
+    android:layout_height="330dp"
+    android:background="@mipmap/remotecontrol_bg">
+
+    <ImageView
+        android:id="@+id/imgEnd"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@mipmap/remotecontrol_pic_direction"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.39"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imgStart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:rotation="180"
+        android:src="@mipmap/remotecontrol_pic_direction"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.39"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imgBottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@mipmap/remotecontrol_pic_direction_bottom"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.39"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.6"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imgTop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:rotation="180"
+        android:src="@mipmap/remotecontrol_pic_direction_bottom"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.39"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        app:layout_constraintWidth_percent="0.6"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.073" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.927" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.073" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93" />
+
+    <TextView
+        android:id="@+id/tvControl"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="165dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgControl"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@mipmap/remotecontrol_pic_rocker"
+        app:layout_constraintBottom_toBottomOf="@id/tvControl"
+        app:layout_constraintEnd_toEndOf="@id/tvControl"
+        app:layout_constraintHeight_percent="0.336"
+        app:layout_constraintStart_toStartOf="@id/tvControl"
+        app:layout_constraintTop_toTopOf="@id/tvControl"
+        app:layout_constraintWidth_percent="0.271"
+        tools:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

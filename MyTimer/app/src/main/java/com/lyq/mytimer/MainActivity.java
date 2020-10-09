@@ -21,6 +21,7 @@ import com.lyq.mytimer.ui.AttrTableViewActivity;
 import com.lyq.mytimer.ui.BackActivity;
 import com.lyq.mytimer.ui.BlurActivity;
 import com.lyq.mytimer.ui.ButterflyActivity;
+import com.lyq.mytimer.ui.ControlAct;
 import com.lyq.mytimer.ui.ControlActivity;
 import com.lyq.mytimer.ui.DebutActivity;
 import com.lyq.mytimer.ui.FontStyleActivity;
@@ -68,6 +69,7 @@ public class MainActivity extends BaseActivity {
 		mData.add(new ModuleInfo(RecyclerAnimationActivity.class, "RecyclerAnimationActivity", "Item动画"));
 		mData.add(new ModuleInfo(AndroidShareActivity.class, "AndroidShareActivity", "原生分享"));
 		mData.add(new ModuleInfo(GroupActivity.class, "GroupActivity", "展开收起"));
+		mData.add(new ModuleInfo(ControlAct.class, "ControlAct", "摇杆"));
 		mData.add(new ModuleInfo(BlurActivity.class, "RenderDialogFg", "高斯模糊"));
 		mData.add(new ModuleInfo(LottieActivity.class, "LottieActivity", "Lottie动画"));
 		mData.add(new ModuleInfo(BackActivity.class, "BackActivity", "路径"));
@@ -95,7 +97,7 @@ public class MainActivity extends BaseActivity {
 		mData.add(new ModuleInfo(RvAnimActivity.class, "RecyclerView的选中动画", "RecyclerView的选中动画"));
 		mData.add(new ModuleInfo(SettingActivity.class, "壁纸设置", "壁纸设置"));
 		mData.add(new ModuleInfo(TransparentActivity.class, "透明", "透明"));
-		mData.add(new ModuleInfo(KnobActivity.class, "透明", "透明"));
+		mData.add(new ModuleInfo(KnobActivity.class, "KnobActivity", "刻度旋钮"));
 		mData.add(new ModuleInfo(FontStyleActivity.class, "字体", "系统字体及字体文件"));
 		mData.add(new ModuleInfo(UpgradeActivity.class, "检测更新", "Bugly"));
 		mData.add(new ModuleInfo(GoToFileManagerActivity.class, "文件管理", "文件管理"));
