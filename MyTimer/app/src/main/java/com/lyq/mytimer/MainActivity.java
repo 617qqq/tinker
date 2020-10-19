@@ -42,6 +42,7 @@ import com.lyq.mytimer.ui.TimeActivity;
 import com.lyq.mytimer.ui.TransparentActivity;
 import com.lyq.mytimer.ui.UpgradeActivity;
 import com.lyq.mytimer.ui.VectorActivity;
+import com.lyq.mytimer.ui.VideoActivity;
 import com.lyq.mytimer.ui.WebActivity;
 import com.lyq.mytimer.ui.WebX5Activity;
 import com.lyq.mytimer.ui.WifiTestActivity;
@@ -68,6 +69,7 @@ public class MainActivity extends BaseActivity {
 	private void setData() {
 		mData.add(new ModuleInfo(RecyclerAnimationActivity.class, "RecyclerAnimationActivity", "Item动画"));
 		mData.add(new ModuleInfo(AndroidShareActivity.class, "AndroidShareActivity", "原生分享"));
+		mData.add(new ModuleInfo(VideoActivity.class, "VideoActivity", "视频播放"));
 		mData.add(new ModuleInfo(GroupActivity.class, "GroupActivity", "展开收起"));
 		mData.add(new ModuleInfo(ControlAct.class, "ControlAct", "摇杆"));
 		mData.add(new ModuleInfo(BlurActivity.class, "RenderDialogFg", "高斯模糊"));

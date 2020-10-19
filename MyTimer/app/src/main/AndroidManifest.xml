@@ -149,6 +149,7 @@
         <activity android:name=".ui.WifiTestActivity" />
         <activity android:name=".ui.AndroidShareActivity" />
         <activity android:name=".ui.ControlAct" />
+        <activity android:name=".ui.VideoActivity"/>
 
         <provider
             android:name=".utils.upgrade.BuglyUpgradeFileProvider"
