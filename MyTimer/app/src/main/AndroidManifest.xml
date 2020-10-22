@@ -19,6 +19,15 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!--bugly应用升级-->
 
+    <!--每日步数-->
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <!--每日步数-->
+
+    <uses-feature android:name="android.hardware.sensor.stepcounter" />
+    <uses-feature android:name="feature:android.hardware.sensor.stepdetector" />
+
     <uses-feature
         android:name="android.software.live_wallpaper"
         android:required="true" />
@@ -136,9 +145,9 @@
 
         <activity android:name=".ui.KnobActivity" />
         <activity android:name=".ui.FontStyleActivity" />
-        <activity android:name=".ui.recycler.RecyclerAnimationActivity"/>
-        <activity android:name=".ui.BlurActivity"/>
-        <activity android:name=".ui.GroupActivity"/>
+        <activity android:name=".ui.recycler.RecyclerAnimationActivity" />
+        <activity android:name=".ui.BlurActivity" />
+        <activity android:name=".ui.GroupActivity" />
 
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
@@ -149,7 +158,26 @@
         <activity android:name=".ui.WifiTestActivity" />
         <activity android:name=".ui.AndroidShareActivity" />
         <activity android:name=".ui.ControlAct" />
-        <activity android:name=".ui.VideoActivity"/>
+        <activity android:name=".ui.VideoActivity" />
+        <activity android:name=".ui.StepTestActivity" />
+        <activity android:name=".step.StepDemoActivity"/>
+
+        <service
+            android:name=".step.StepService"
+            android:priority="1000"
+            android:process="com.spring.stepcount.service">
+            <intent-filter>
+                <!-- 系统启动完成后会调用-->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_TIME_TICK" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </service>
+
 
         <provider
             android:name=".utils.upgrade.BuglyUpgradeFileProvider"
